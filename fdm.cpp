@@ -64,13 +64,12 @@ void FDMEulerExplicit::calculate_inner_domain() {
     gamma = dt_sig + dt_sig_2;
 
     // Update inner values of spatial discretisation grid (Explicit Euler)
-    new_result[j] = ( (alpha * old_result[j-1]) +
+      new_result[j] = ( (alpha * old_result[j-1]) +
                       (beta * old_result[j]) +
                       (gamma * old_result[j+1]) )/(dx*dx) -
       (dt*(pde->source_coeff(prev_t, x_values[j])));
   }
 }
-
 void FDMEulerExplicit::step_march() {
     std::ofstream fdm_out("/Users/benewilkens/Documents/ArmstrongFin/CSV/fdm.csv");
 
@@ -78,6 +77,50 @@ void FDMEulerExplicit::step_march() {
     cur_t = prev_t + dt;
     calculate_boundary_conditions();
     calculate_inner_domain();
+    for (int j=0; j<J; j++) {
+      fdm_out << x_values[j] << " " << prev_t << " " << new_result[j] << std::endl;
+    }
+    
+    old_result = new_result;
+    prev_t = cur_t;
+  }
+
+  fdm_out.close();
+}
+
+void FDMEulerExplicit::calculate_inner_domain_parallel() {
+    #pragma omp parallel for
+    for (unsigned long j = 1; j < J - 1; j++) {
+        // Temporary variables used throughout
+        double dt_sig = dt * (pde->diff_coeff(prev_t, x_values[j]));
+        double dt_sig_2 = dt * dx * 0.5 * (pde->conv_coeff(prev_t, x_values[j]));
+
+        // Differencing coefficients (see \alpha, \beta and \gamma in text)
+        double alpha = dt_sig - dt_sig_2;
+        double beta = dx * dx - (2.0 * dt_sig) + (dt * dx * dx * (pde->zero_coeff(prev_t, x_values[j])));
+        double gamma = dt_sig + dt_sig_2;
+
+        // Update inner values of spatial discretisation grid (Explicit Euler)
+        double new_value = ((alpha * old_result[j - 1]) +
+                            (beta * old_result[j]) +
+                            (gamma * old_result[j + 1])) / (dx * dx) -
+                           (dt * (pde->source_coeff(prev_t, x_values[j])));
+
+        // Protect the update of new_result[j] using critical section
+        #pragma omp critical
+        {
+            new_result[j] = new_value;
+        }
+    }
+}
+
+void FDMEulerExplicit::step_march_parallel() {
+    std::ofstream fdm_out("/Users/benewilkens/Documents/ArmstrongFin/CSV/fdm.csv");
+
+  while(cur_t < t_dom) {
+    cur_t = prev_t + dt;
+    calculate_boundary_conditions();
+    calculate_inner_domain_parallel();
     for (int j=0; j<J; j++) {
       fdm_out << x_values[j] << " " << prev_t << " " << new_result[j] << std::endl;
     }
@@ -106,7 +149,7 @@ static void testPDEvisually(){
 
       // FDM discretisation parameters
       double x_dom = 100.0;       // Spot goes from [0.0, 1.0]
-      unsigned long J = 50;
+      unsigned long J = 4000;
       double t_dom = c->getMaturity();         // Time period as for the option
       unsigned long N = 100;
         
@@ -188,7 +231,36 @@ static void testPDEcallPrices(){
     plot("CallPDEprices.html", spots, option_value);
 }
 
+static void testPDEparallel(){
+    std::shared_ptr<CallOption> c = std::make_shared<CallOption>();
+    c->setStrike(50.5);
+    c->setMaturity(1.0);
+    
+    std::shared_ptr<BlackScholesModel> bsm = std::make_shared<BlackScholesModel>();
+    bsm->setRiskFreeRate(0.05);
+    bsm->setVolatility(0.2);
+
+      // FDM discretisation parameters
+      double x_dom = 100.0;       // Spot goes from [0.0, 1.0]
+      unsigned long J = 4000;
+      double t_dom = c->getMaturity();         // Time period as for the option
+      unsigned long N = 100;
+        
+      // Create the PDE and FDM objects
+      std::shared_ptr<BlackScholesPDE> bs_pde = std::make_shared<BlackScholesPDE>(c, bsm);
+      FDMEulerExplicit fdm_euler(x_dom, J, t_dom, N, bs_pde);
+
+      // Run the FDM solver
+    std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+    fdm_euler.step_march_parallel();
+    std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+    std::cout << "Time difference = " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << "[µs]" << std::endl;
+    std::cout << "Time difference = " << pow(10,-6)*std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << "[s]" << std::endl;
+}
+
 void testBlackScholesPDE(){
     TEST( testPDEvisually );
+    TEST( testPDEparallel );
     TEST( testPDEcallPrices );
+    
 }

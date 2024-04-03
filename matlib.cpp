@@ -315,6 +315,52 @@ void print(std::vector<double> v){
     std::cout << v[v.size()] << std::endl;
 }
 
+double sum_parallel(std::vector<double>& v){
+    double sum = 0;
+    int size = int(v.size());
+    #pragma omp parallel for reduction(+:totalSum)
+    for (int i = 0; i < size; ++i) {
+        sum += v[i];
+    }
+    return sum;
+}
+
+double sum_simple(std::vector<double> v){
+    double sum = 0;
+    int size = int(v.size());
+    for(int i = 0; i < size; i++){
+        sum += v[i];
+    }
+    return sum;
+}
+
+static void testParallelSum(){
+    int n = 1000000;
+    std::vector<double> v1(n,1);
+    
+    double answer_simple;
+    double answer_parallel;
+    
+    std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+    
+    answer_simple = sum_simple(v1);
+    
+    std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+    std::cout << "Time difference = " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << "[µs]" << std::endl;
+    std::cout << "Time difference = " << pow(10,-6)*std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << "[s]" << std::endl;
+    std::cout<< "Sum simple = " << answer_simple << std::endl;
+    
+    /* PARALLEL test*/
+    begin = std::chrono::steady_clock::now();
+    
+    answer_parallel = sum_parallel(v1);
+    
+    end = std::chrono::steady_clock::now();
+    std::cout << "Time difference = " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << "[µs]" << std::endl;
+    std::cout << "Time difference = " << pow(10,-6)*std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << "[s]" << std::endl;
+    std::cout<< "Sum parallel = " << answer_parallel;
+}
+
 
 ///////////////////////////////////////////////
 //
@@ -429,6 +475,7 @@ static void testIntegralVersion2() {
 
 
 void testMatlib() {
+    
     TEST( testLinspace );
     TEST( testMean );
     TEST( testStandardDeviation );
@@ -441,4 +488,6 @@ void testMatlib() {
     TEST( testPrctile );
     TEST( testIntegral );
     TEST( testIntegralVersion2 );
+     
+    TEST( testParallelSum );
 }

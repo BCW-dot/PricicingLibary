@@ -57,6 +57,9 @@ double integral( RealFunction& f,
                  double b,
                  int nSteps );
 
+double sum_parallel(std::vector<double>& v);
+double sum_simple(std::vector<double> v);
+
 
 
 

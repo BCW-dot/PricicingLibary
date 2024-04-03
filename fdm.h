@@ -52,6 +52,7 @@ class FDMEulerExplicit : public FDMBase {
   void set_initial_conditions();
   void calculate_boundary_conditions();
   void calculate_inner_domain();
+    void calculate_inner_domain_parallel();
 
  public:
   FDMEulerExplicit(double _x_dom, unsigned long _J,
@@ -59,6 +60,7 @@ class FDMEulerExplicit : public FDMBase {
                    std::shared_ptr<ConvectionDiffusionPDE> _pde);
 
   void step_march();
+    void step_march_parallel();
     
     void copy_result(std::vector<double>& v);
 };
