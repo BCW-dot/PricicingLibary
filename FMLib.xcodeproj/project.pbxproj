@@ -1,0 +1,456 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AC180E061D3E8678009AE6D4 /* AsianOption.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AC180DD31D3E8678009AE6D4 /* AsianOption.cpp */; };
+		AC180E071D3E8678009AE6D4 /* BarrierOption.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AC180DD51D3E8678009AE6D4 /* BarrierOption.cpp */; };
+		AC180E081D3E8678009AE6D4 /* BlackScholesModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AC180DD71D3E8678009AE6D4 /* BlackScholesModel.cpp */; };
+		AC180E091D3E8678009AE6D4 /* CallOption.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AC180DD91D3E8678009AE6D4 /* CallOption.cpp */; };
+		AC180E0A1D3E8678009AE6D4 /* ContinuousTimeOption.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AC180DDC1D3E8678009AE6D4 /* ContinuousTimeOption.cpp */; };
+		AC180E0B1D3E8678009AE6D4 /* ContinuousTimeOptionBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AC180DDE1D3E8678009AE6D4 /* ContinuousTimeOptionBase.cpp */; };
+		AC180E0C1D3E8678009AE6D4 /* DownAndOutOption.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AC180DE01D3E8678009AE6D4 /* DownAndOutOption.cpp */; };
+		AC180E0D1D3E8678009AE6D4 /* geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AC180DE21D3E8678009AE6D4 /* geometry.cpp */; };
+		AC180E0E1D3E8678009AE6D4 /* HedgingSimulator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AC180DE41D3E8678009AE6D4 /* HedgingSimulator.cpp */; };
+		AC180E0F1D3E8678009AE6D4 /* Histogram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AC180DE61D3E8678009AE6D4 /* Histogram.cpp */; };
+		AC180E101D3E8678009AE6D4 /* LineChart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AC180DE81D3E8678009AE6D4 /* LineChart.cpp */; };
+		AC180E111D3E8678009AE6D4 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AC180DEA1D3E8678009AE6D4 /* main.cpp */; };
+		AC180E121D3E8678009AE6D4 /* matlib.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AC180DEB1D3E8678009AE6D4 /* matlib.cpp */; };
+		AC180E131D3E8678009AE6D4 /* MonteCarloPricer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AC180DED1D3E8678009AE6D4 /* MonteCarloPricer.cpp */; };
+		AC180E141D3E8678009AE6D4 /* PathIndependentOption.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AC180DEF1D3E8678009AE6D4 /* PathIndependentOption.cpp */; };
+		AC180E151D3E8678009AE6D4 /* PieChart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AC180DF11D3E8678009AE6D4 /* PieChart.cpp */; };
+		AC180E161D3E8678009AE6D4 /* Portfolio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AC180DF31D3E8678009AE6D4 /* Portfolio.cpp */; };
+		AC180E171D3E8678009AE6D4 /* Priceable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AC180DF51D3E8678009AE6D4 /* Priceable.cpp */; };
+		AC180E181D3E8678009AE6D4 /* PutOption.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AC180DF71D3E8678009AE6D4 /* PutOption.cpp */; };
+		AC180E191D3E8678009AE6D4 /* RealFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AC180DF91D3E8678009AE6D4 /* RealFunction.cpp */; };
+		AC180E1A1D3E8678009AE6D4 /* testing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AC180DFD1D3E8678009AE6D4 /* testing.cpp */; };
+		AC180E1B1D3E8678009AE6D4 /* textfunctions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AC180DFF1D3E8678009AE6D4 /* textfunctions.cpp */; };
+		AC180E1C1D3E8678009AE6D4 /* UpAndInOption.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AC180E011D3E8678009AE6D4 /* UpAndInOption.cpp */; };
+		AC180E1D1D3E8678009AE6D4 /* UpAndOutOption.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AC180E031D3E8678009AE6D4 /* UpAndOutOption.cpp */; };
+		B9018D9D2BBC35E900770579 /* pde.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9018D972BBC35E900770579 /* pde.cpp */; };
+		B93CAB5C2BBD45780044A1FE /* fdm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B93CAB5B2BBD45780044A1FE /* fdm.cpp */; };
+		B9D86D3B2BB475C200FFF7EB /* StockPriceModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9D86D3A2BB475C200FFF7EB /* StockPriceModel.cpp */; };
+		B9D86D3E2BB4818200FFF7EB /* TwoLevelModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9D86D3D2BB4818200FFF7EB /* TwoLevelModel.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		AC5F9B621D3E7592003689AA /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		AC180DD31D3E8678009AE6D4 /* AsianOption.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AsianOption.cpp; sourceTree = "<group>"; };
+		AC180DD41D3E8678009AE6D4 /* AsianOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsianOption.h; sourceTree = "<group>"; };
+		AC180DD51D3E8678009AE6D4 /* BarrierOption.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BarrierOption.cpp; sourceTree = "<group>"; };
+		AC180DD61D3E8678009AE6D4 /* BarrierOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BarrierOption.h; sourceTree = "<group>"; };
+		AC180DD71D3E8678009AE6D4 /* BlackScholesModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BlackScholesModel.cpp; sourceTree = "<group>"; };
+		AC180DD81D3E8678009AE6D4 /* BlackScholesModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlackScholesModel.h; sourceTree = "<group>"; };
+		AC180DD91D3E8678009AE6D4 /* CallOption.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CallOption.cpp; sourceTree = "<group>"; };
+		AC180DDA1D3E8678009AE6D4 /* CallOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallOption.h; sourceTree = "<group>"; };
+		AC180DDB1D3E8678009AE6D4 /* Chart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chart.h; sourceTree = "<group>"; };
+		AC180DDC1D3E8678009AE6D4 /* ContinuousTimeOption.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ContinuousTimeOption.cpp; sourceTree = "<group>"; };
+		AC180DDD1D3E8678009AE6D4 /* ContinuousTimeOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContinuousTimeOption.h; sourceTree = "<group>"; };
+		AC180DDE1D3E8678009AE6D4 /* ContinuousTimeOptionBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ContinuousTimeOptionBase.cpp; sourceTree = "<group>"; };
+		AC180DDF1D3E8678009AE6D4 /* ContinuousTimeOptionBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContinuousTimeOptionBase.h; sourceTree = "<group>"; };
+		AC180DE01D3E8678009AE6D4 /* DownAndOutOption.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DownAndOutOption.cpp; sourceTree = "<group>"; };
+		AC180DE11D3E8678009AE6D4 /* DownAndOutOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownAndOutOption.h; sourceTree = "<group>"; };
+		AC180DE21D3E8678009AE6D4 /* geometry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = geometry.cpp; sourceTree = "<group>"; };
+		AC180DE31D3E8678009AE6D4 /* geometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = geometry.h; sourceTree = "<group>"; };
+		AC180DE41D3E8678009AE6D4 /* HedgingSimulator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HedgingSimulator.cpp; sourceTree = "<group>"; };
+		AC180DE51D3E8678009AE6D4 /* HedgingSimulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HedgingSimulator.h; sourceTree = "<group>"; };
+		AC180DE61D3E8678009AE6D4 /* Histogram.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Histogram.cpp; sourceTree = "<group>"; };
+		AC180DE71D3E8678009AE6D4 /* Histogram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Histogram.h; sourceTree = "<group>"; };
+		AC180DE81D3E8678009AE6D4 /* LineChart.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LineChart.cpp; sourceTree = "<group>"; };
+		AC180DE91D3E8678009AE6D4 /* LineChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineChart.h; sourceTree = "<group>"; };
+		AC180DEA1D3E8678009AE6D4 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		AC180DEB1D3E8678009AE6D4 /* matlib.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = matlib.cpp; sourceTree = "<group>"; };
+		AC180DEC1D3E8678009AE6D4 /* matlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = matlib.h; sourceTree = "<group>"; };
+		AC180DED1D3E8678009AE6D4 /* MonteCarloPricer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MonteCarloPricer.cpp; sourceTree = "<group>"; };
+		AC180DEE1D3E8678009AE6D4 /* MonteCarloPricer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonteCarloPricer.h; sourceTree = "<group>"; };
+		AC180DEF1D3E8678009AE6D4 /* PathIndependentOption.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PathIndependentOption.cpp; sourceTree = "<group>"; };
+		AC180DF01D3E8678009AE6D4 /* PathIndependentOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathIndependentOption.h; sourceTree = "<group>"; };
+		AC180DF11D3E8678009AE6D4 /* PieChart.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PieChart.cpp; sourceTree = "<group>"; };
+		AC180DF21D3E8678009AE6D4 /* PieChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PieChart.h; sourceTree = "<group>"; };
+		AC180DF31D3E8678009AE6D4 /* Portfolio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Portfolio.cpp; sourceTree = "<group>"; };
+		AC180DF41D3E8678009AE6D4 /* Portfolio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Portfolio.h; sourceTree = "<group>"; };
+		AC180DF51D3E8678009AE6D4 /* Priceable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Priceable.cpp; sourceTree = "<group>"; };
+		AC180DF61D3E8678009AE6D4 /* Priceable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Priceable.h; sourceTree = "<group>"; };
+		AC180DF71D3E8678009AE6D4 /* PutOption.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PutOption.cpp; sourceTree = "<group>"; };
+		AC180DF81D3E8678009AE6D4 /* PutOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PutOption.h; sourceTree = "<group>"; };
+		AC180DF91D3E8678009AE6D4 /* RealFunction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RealFunction.cpp; sourceTree = "<group>"; };
+		AC180DFA1D3E8678009AE6D4 /* RealFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RealFunction.h; sourceTree = "<group>"; };
+		AC180DFB1D3E8678009AE6D4 /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stdafx.h; sourceTree = "<group>"; };
+		AC180DFC1D3E8678009AE6D4 /* Stock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stock.h; sourceTree = "<group>"; };
+		AC180DFD1D3E8678009AE6D4 /* testing.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = testing.cpp; sourceTree = "<group>"; };
+		AC180DFE1D3E8678009AE6D4 /* testing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = testing.h; sourceTree = "<group>"; };
+		AC180DFF1D3E8678009AE6D4 /* textfunctions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = textfunctions.cpp; sourceTree = "<group>"; };
+		AC180E001D3E8678009AE6D4 /* textfunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = textfunctions.h; sourceTree = "<group>"; };
+		AC180E011D3E8678009AE6D4 /* UpAndInOption.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UpAndInOption.cpp; sourceTree = "<group>"; };
+		AC180E021D3E8678009AE6D4 /* UpAndInOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpAndInOption.h; sourceTree = "<group>"; };
+		AC180E031D3E8678009AE6D4 /* UpAndOutOption.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UpAndOutOption.cpp; sourceTree = "<group>"; };
+		AC180E041D3E8678009AE6D4 /* UpAndOutOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpAndOutOption.h; sourceTree = "<group>"; };
+		AC180E051D3E8678009AE6D4 /* ZeroCouponBond.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZeroCouponBond.h; sourceTree = "<group>"; };
+		AC5F9B641D3E7592003689AA /* FMLib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = FMLib; sourceTree = BUILT_PRODUCTS_DIR; };
+		B9018D952BBC35E900770579 /* pde.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pde.h; sourceTree = "<group>"; };
+		B9018D972BBC35E900770579 /* pde.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pde.cpp; sourceTree = "<group>"; };
+		B9018D992BBC35E900770579 /* fdm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fdm.h; sourceTree = "<group>"; };
+		B93CAB5B2BBD45780044A1FE /* fdm.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = fdm.cpp; sourceTree = "<group>"; };
+		B9D86D3A2BB475C200FFF7EB /* StockPriceModel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StockPriceModel.cpp; sourceTree = "<group>"; };
+		B9D86D3C2BB475DB00FFF7EB /* StockPriceModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StockPriceModel.h; sourceTree = "<group>"; };
+		B9D86D3D2BB4818200FFF7EB /* TwoLevelModel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TwoLevelModel.cpp; sourceTree = "<group>"; };
+		B9D86D3F2BB4818F00FFF7EB /* TwoLevelModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TwoLevelModel.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AC5F9B611D3E7592003689AA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AC5F9B5B1D3E7592003689AA = {
+			isa = PBXGroup;
+			children = (
+				B9018D992BBC35E900770579 /* fdm.h */,
+				B93CAB5B2BBD45780044A1FE /* fdm.cpp */,
+				B9018D952BBC35E900770579 /* pde.h */,
+				B9018D972BBC35E900770579 /* pde.cpp */,
+				AC180DDC1D3E8678009AE6D4 /* ContinuousTimeOption.cpp */,
+				AC180DDD1D3E8678009AE6D4 /* ContinuousTimeOption.h */,
+				AC180DDE1D3E8678009AE6D4 /* ContinuousTimeOptionBase.cpp */,
+				AC180DDF1D3E8678009AE6D4 /* ContinuousTimeOptionBase.h */,
+				AC180DEF1D3E8678009AE6D4 /* PathIndependentOption.cpp */,
+				AC180DF01D3E8678009AE6D4 /* PathIndependentOption.h */,
+				AC180DD91D3E8678009AE6D4 /* CallOption.cpp */,
+				AC180DDA1D3E8678009AE6D4 /* CallOption.h */,
+				AC180DF71D3E8678009AE6D4 /* PutOption.cpp */,
+				AC180DF81D3E8678009AE6D4 /* PutOption.h */,
+				AC180DD51D3E8678009AE6D4 /* BarrierOption.cpp */,
+				AC180DD61D3E8678009AE6D4 /* BarrierOption.h */,
+				AC180E011D3E8678009AE6D4 /* UpAndInOption.cpp */,
+				AC180E021D3E8678009AE6D4 /* UpAndInOption.h */,
+				AC180E031D3E8678009AE6D4 /* UpAndOutOption.cpp */,
+				AC180E041D3E8678009AE6D4 /* UpAndOutOption.h */,
+				AC180DE01D3E8678009AE6D4 /* DownAndOutOption.cpp */,
+				AC180DE11D3E8678009AE6D4 /* DownAndOutOption.h */,
+				AC180DD31D3E8678009AE6D4 /* AsianOption.cpp */,
+				AC180DD41D3E8678009AE6D4 /* AsianOption.h */,
+				B9D86D3A2BB475C200FFF7EB /* StockPriceModel.cpp */,
+				B9D86D3C2BB475DB00FFF7EB /* StockPriceModel.h */,
+				AC180DD71D3E8678009AE6D4 /* BlackScholesModel.cpp */,
+				AC180DD81D3E8678009AE6D4 /* BlackScholesModel.h */,
+				B9D86D3D2BB4818200FFF7EB /* TwoLevelModel.cpp */,
+				B9D86D3F2BB4818F00FFF7EB /* TwoLevelModel.h */,
+				AC180DED1D3E8678009AE6D4 /* MonteCarloPricer.cpp */,
+				AC180DEE1D3E8678009AE6D4 /* MonteCarloPricer.h */,
+				AC180DFC1D3E8678009AE6D4 /* Stock.h */,
+				AC180E051D3E8678009AE6D4 /* ZeroCouponBond.h */,
+				AC180DF51D3E8678009AE6D4 /* Priceable.cpp */,
+				AC180DF61D3E8678009AE6D4 /* Priceable.h */,
+				AC180DF31D3E8678009AE6D4 /* Portfolio.cpp */,
+				AC180DF41D3E8678009AE6D4 /* Portfolio.h */,
+				AC180DE41D3E8678009AE6D4 /* HedgingSimulator.cpp */,
+				AC180DE51D3E8678009AE6D4 /* HedgingSimulator.h */,
+				AC180DEA1D3E8678009AE6D4 /* main.cpp */,
+				AC180DEB1D3E8678009AE6D4 /* matlib.cpp */,
+				AC180DEC1D3E8678009AE6D4 /* matlib.h */,
+				AC180DF91D3E8678009AE6D4 /* RealFunction.cpp */,
+				AC180DFA1D3E8678009AE6D4 /* RealFunction.h */,
+				AC180DE81D3E8678009AE6D4 /* LineChart.cpp */,
+				AC180DE91D3E8678009AE6D4 /* LineChart.h */,
+				AC180DDB1D3E8678009AE6D4 /* Chart.h */,
+				AC180DE21D3E8678009AE6D4 /* geometry.cpp */,
+				AC180DE31D3E8678009AE6D4 /* geometry.h */,
+				AC180DE61D3E8678009AE6D4 /* Histogram.cpp */,
+				AC180DE71D3E8678009AE6D4 /* Histogram.h */,
+				AC180DFF1D3E8678009AE6D4 /* textfunctions.cpp */,
+				AC180E001D3E8678009AE6D4 /* textfunctions.h */,
+				AC180DF11D3E8678009AE6D4 /* PieChart.cpp */,
+				AC180DF21D3E8678009AE6D4 /* PieChart.h */,
+				AC180DFB1D3E8678009AE6D4 /* stdafx.h */,
+				AC180DFD1D3E8678009AE6D4 /* testing.cpp */,
+				AC180DFE1D3E8678009AE6D4 /* testing.h */,
+				AC5F9B661D3E7592003689AA /* FMLib */,
+				AC5F9B651D3E7592003689AA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AC5F9B651D3E7592003689AA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AC5F9B641D3E7592003689AA /* FMLib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AC5F9B661D3E7592003689AA /* FMLib */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = FMLib;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AC5F9B631D3E7592003689AA /* FMLib */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AC5F9B6B1D3E7592003689AA /* Build configuration list for PBXNativeTarget "FMLib" */;
+			buildPhases = (
+				AC5F9B601D3E7592003689AA /* Sources */,
+				AC5F9B611D3E7592003689AA /* Frameworks */,
+				AC5F9B621D3E7592003689AA /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FMLib;
+			productName = FMLib;
+			productReference = AC5F9B641D3E7592003689AA /* FMLib */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AC5F9B5C1D3E7592003689AA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1320;
+				ORGANIZATIONNAME = "C++ for financial mathematics";
+				TargetAttributes = {
+					AC5F9B631D3E7592003689AA = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
+				};
+			};
+			buildConfigurationList = AC5F9B5F1D3E7592003689AA /* Build configuration list for PBXProject "FMLib" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = AC5F9B5B1D3E7592003689AA;
+			productRefGroup = AC5F9B651D3E7592003689AA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AC5F9B631D3E7592003689AA /* FMLib */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AC5F9B601D3E7592003689AA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AC180E141D3E8678009AE6D4 /* PathIndependentOption.cpp in Sources */,
+				AC180E0C1D3E8678009AE6D4 /* DownAndOutOption.cpp in Sources */,
+				AC180E181D3E8678009AE6D4 /* PutOption.cpp in Sources */,
+				AC180E191D3E8678009AE6D4 /* RealFunction.cpp in Sources */,
+				AC180E101D3E8678009AE6D4 /* LineChart.cpp in Sources */,
+				AC180E111D3E8678009AE6D4 /* main.cpp in Sources */,
+				AC180E0D1D3E8678009AE6D4 /* geometry.cpp in Sources */,
+				AC180E171D3E8678009AE6D4 /* Priceable.cpp in Sources */,
+				AC180E091D3E8678009AE6D4 /* CallOption.cpp in Sources */,
+				AC180E1C1D3E8678009AE6D4 /* UpAndInOption.cpp in Sources */,
+				AC180E071D3E8678009AE6D4 /* BarrierOption.cpp in Sources */,
+				B9D86D3E2BB4818200FFF7EB /* TwoLevelModel.cpp in Sources */,
+				AC180E131D3E8678009AE6D4 /* MonteCarloPricer.cpp in Sources */,
+				AC180E1D1D3E8678009AE6D4 /* UpAndOutOption.cpp in Sources */,
+				AC180E061D3E8678009AE6D4 /* AsianOption.cpp in Sources */,
+				AC180E1B1D3E8678009AE6D4 /* textfunctions.cpp in Sources */,
+				AC180E0A1D3E8678009AE6D4 /* ContinuousTimeOption.cpp in Sources */,
+				AC180E0F1D3E8678009AE6D4 /* Histogram.cpp in Sources */,
+				AC180E0E1D3E8678009AE6D4 /* HedgingSimulator.cpp in Sources */,
+				B93CAB5C2BBD45780044A1FE /* fdm.cpp in Sources */,
+				AC180E081D3E8678009AE6D4 /* BlackScholesModel.cpp in Sources */,
+				AC180E151D3E8678009AE6D4 /* PieChart.cpp in Sources */,
+				B9018D9D2BBC35E900770579 /* pde.cpp in Sources */,
+				AC180E1A1D3E8678009AE6D4 /* testing.cpp in Sources */,
+				B9D86D3B2BB475C200FFF7EB /* StockPriceModel.cpp in Sources */,
+				AC180E161D3E8678009AE6D4 /* Portfolio.cpp in Sources */,
+				AC180E0B1D3E8678009AE6D4 /* ContinuousTimeOptionBase.cpp in Sources */,
+				AC180E121D3E8678009AE6D4 /* matlib.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		AC5F9B691D3E7592003689AA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		AC5F9B6A1D3E7592003689AA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		AC5F9B6C1D3E7592003689AA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WARNING_CFLAGS = (
+					"-Wno-inconsistent-missing-override",
+					"-Wno-unreachable-code",
+				);
+			};
+			name = Debug;
+		};
+		AC5F9B6D1D3E7592003689AA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WARNING_CFLAGS = (
+					"-Wno-inconsistent-missing-override",
+					"-Wno-unreachable-code",
+				);
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AC5F9B5F1D3E7592003689AA /* Build configuration list for PBXProject "FMLib" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AC5F9B691D3E7592003689AA /* Debug */,
+				AC5F9B6A1D3E7592003689AA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AC5F9B6B1D3E7592003689AA /* Build configuration list for PBXNativeTarget "FMLib" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AC5F9B6C1D3E7592003689AA /* Debug */,
+				AC5F9B6D1D3E7592003689AA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AC5F9B5C1D3E7592003689AA /* Project object */;
+}
