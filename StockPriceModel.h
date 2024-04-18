@@ -6,6 +6,7 @@ public:
     virtual ~StockPriceModel() {}
     /* generate P-measure price paths */
     virtual std::vector<double> generatePricePath(double toDate, int nSteps) const =0;
+    virtual std::vector<double> generateRiskNeutralPricePath(double toDate, int nSteps) const;
     
     double getDrift() const {
         return drift;

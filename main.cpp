@@ -18,6 +18,10 @@
 
 #include "pde.h"
 #include "fdm.h"
+#include "HestonModel.h"
+#include "ScottChesney.h"
+
+#include <ctime>
 
 //using namespace std;
 
@@ -41,10 +45,13 @@ int main() {
     testPortfolio();
 	testHedgingSimulator();
 	*/
+    //testBlackScholesModel();
     //testMonteCarloPricer();
     //testHedgingSimulator();
     //testTwoLevelModel();
-    testBlackScholesPDE();
-    //testMatlib();
+    //testBlackScholesPDE();
+    testMatlib();
+    //testHestonModel();
+    //testScottChesneyModel();
     return 0;
 }

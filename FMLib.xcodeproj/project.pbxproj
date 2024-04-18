@@ -32,7 +32,9 @@
 		AC180E1C1D3E8678009AE6D4 /* UpAndInOption.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AC180E011D3E8678009AE6D4 /* UpAndInOption.cpp */; };
 		AC180E1D1D3E8678009AE6D4 /* UpAndOutOption.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AC180E031D3E8678009AE6D4 /* UpAndOutOption.cpp */; };
 		B9018D9D2BBC35E900770579 /* pde.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9018D972BBC35E900770579 /* pde.cpp */; };
+		B91991292BC5656900E8BFA6 /* HestonModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B91991282BC5656900E8BFA6 /* HestonModel.cpp */; };
 		B93CAB5C2BBD45780044A1FE /* fdm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B93CAB5B2BBD45780044A1FE /* fdm.cpp */; };
+		B995BA6E2BC842530058B874 /* ScottChesney.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B995BA6D2BC842530058B874 /* ScottChesney.cpp */; };
 		B9D86D3B2BB475C200FFF7EB /* StockPriceModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9D86D3A2BB475C200FFF7EB /* StockPriceModel.cpp */; };
 		B9D86D3E2BB4818200FFF7EB /* TwoLevelModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9D86D3D2BB4818200FFF7EB /* TwoLevelModel.cpp */; };
 /* End PBXBuildFile section */
@@ -105,7 +107,11 @@
 		B9018D952BBC35E900770579 /* pde.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pde.h; sourceTree = "<group>"; };
 		B9018D972BBC35E900770579 /* pde.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pde.cpp; sourceTree = "<group>"; };
 		B9018D992BBC35E900770579 /* fdm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fdm.h; sourceTree = "<group>"; };
+		B91991282BC5656900E8BFA6 /* HestonModel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = HestonModel.cpp; sourceTree = "<group>"; };
+		B919912A2BC5657700E8BFA6 /* HestonModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HestonModel.h; sourceTree = "<group>"; };
 		B93CAB5B2BBD45780044A1FE /* fdm.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = fdm.cpp; sourceTree = "<group>"; };
+		B995BA6D2BC842530058B874 /* ScottChesney.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ScottChesney.cpp; sourceTree = "<group>"; };
+		B995BA6F2BC842680058B874 /* ScottChesney.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScottChesney.h; sourceTree = "<group>"; };
 		B9D86D3A2BB475C200FFF7EB /* StockPriceModel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StockPriceModel.cpp; sourceTree = "<group>"; };
 		B9D86D3C2BB475DB00FFF7EB /* StockPriceModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StockPriceModel.h; sourceTree = "<group>"; };
 		B9D86D3D2BB4818200FFF7EB /* TwoLevelModel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TwoLevelModel.cpp; sourceTree = "<group>"; };
@@ -126,10 +132,6 @@
 		AC5F9B5B1D3E7592003689AA = {
 			isa = PBXGroup;
 			children = (
-				B9018D992BBC35E900770579 /* fdm.h */,
-				B93CAB5B2BBD45780044A1FE /* fdm.cpp */,
-				B9018D952BBC35E900770579 /* pde.h */,
-				B9018D972BBC35E900770579 /* pde.cpp */,
 				AC180DDC1D3E8678009AE6D4 /* ContinuousTimeOption.cpp */,
 				AC180DDD1D3E8678009AE6D4 /* ContinuousTimeOption.h */,
 				AC180DDE1D3E8678009AE6D4 /* ContinuousTimeOptionBase.cpp */,
@@ -154,10 +156,18 @@
 				B9D86D3C2BB475DB00FFF7EB /* StockPriceModel.h */,
 				AC180DD71D3E8678009AE6D4 /* BlackScholesModel.cpp */,
 				AC180DD81D3E8678009AE6D4 /* BlackScholesModel.h */,
+				B91991282BC5656900E8BFA6 /* HestonModel.cpp */,
+				B919912A2BC5657700E8BFA6 /* HestonModel.h */,
+				B995BA6D2BC842530058B874 /* ScottChesney.cpp */,
+				B995BA6F2BC842680058B874 /* ScottChesney.h */,
 				B9D86D3D2BB4818200FFF7EB /* TwoLevelModel.cpp */,
 				B9D86D3F2BB4818F00FFF7EB /* TwoLevelModel.h */,
 				AC180DED1D3E8678009AE6D4 /* MonteCarloPricer.cpp */,
 				AC180DEE1D3E8678009AE6D4 /* MonteCarloPricer.h */,
+				B93CAB5B2BBD45780044A1FE /* fdm.cpp */,
+				B9018D992BBC35E900770579 /* fdm.h */,
+				B9018D972BBC35E900770579 /* pde.cpp */,
+				B9018D952BBC35E900770579 /* pde.h */,
 				AC180DFC1D3E8678009AE6D4 /* Stock.h */,
 				AC180E051D3E8678009AE6D4 /* ZeroCouponBond.h */,
 				AC180DF51D3E8678009AE6D4 /* Priceable.cpp */,
@@ -264,6 +274,7 @@
 			files = (
 				AC180E141D3E8678009AE6D4 /* PathIndependentOption.cpp in Sources */,
 				AC180E0C1D3E8678009AE6D4 /* DownAndOutOption.cpp in Sources */,
+				B995BA6E2BC842530058B874 /* ScottChesney.cpp in Sources */,
 				AC180E181D3E8678009AE6D4 /* PutOption.cpp in Sources */,
 				AC180E191D3E8678009AE6D4 /* RealFunction.cpp in Sources */,
 				AC180E101D3E8678009AE6D4 /* LineChart.cpp in Sources */,
@@ -276,6 +287,7 @@
 				B9D86D3E2BB4818200FFF7EB /* TwoLevelModel.cpp in Sources */,
 				AC180E131D3E8678009AE6D4 /* MonteCarloPricer.cpp in Sources */,
 				AC180E1D1D3E8678009AE6D4 /* UpAndOutOption.cpp in Sources */,
+				B91991292BC5656900E8BFA6 /* HestonModel.cpp in Sources */,
 				AC180E061D3E8678009AE6D4 /* AsianOption.cpp in Sources */,
 				AC180E1B1D3E8678009AE6D4 /* textfunctions.cpp in Sources */,
 				AC180E0A1D3E8678009AE6D4 /* ContinuousTimeOption.cpp in Sources */,
@@ -347,6 +359,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = YES;
+				NEW_SETTING = "";
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -397,6 +410,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				NEW_SETTING = "";
+				"OTHER_CPLUSPLUSFLAGS[arch=*]" = "$(OTHER_CFLAGS)";
 				SDKROOT = macosx;
 			};
 			name = Release;

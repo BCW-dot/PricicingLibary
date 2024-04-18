@@ -3,6 +3,8 @@
 #include "stdafx.h"
 #include "ContinuousTimeOption.h"
 #include "BlackScholesModel.h"
+#include "HestonModel.h"
+#include "StockPriceModel.h"
 
 class MonteCarloPricer {
 public:
@@ -14,7 +16,7 @@ public:
     int nSteps;
     /*  Price the option */
     double price( const ContinuousTimeOption& option,
-                  const BlackScholesModel& model );
+                  const StockPriceModel& model );    
     /* Delta of an Option */
     double delta(const ContinuousTimeOption& option, const BlackScholesModel &model);
 };

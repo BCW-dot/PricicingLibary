@@ -8,6 +8,9 @@ class CallOption : public PathIndependentOption {
 public:
 
     double payoff( double stockAtMaturity ) const;
+    double payoff(const std::vector<double>& stockPrices ) const {
+        return payoff(stockPrices.back());
+    }
 
     double price( const BlackScholesModel& bsm )
         const;

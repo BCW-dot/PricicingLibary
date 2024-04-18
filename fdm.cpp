@@ -71,7 +71,7 @@ void FDMEulerExplicit::calculate_inner_domain() {
   }
 }
 void FDMEulerExplicit::step_march() {
-    std::ofstream fdm_out("/Users/benewilkens/Documents/ArmstrongFin/CSV/fdm.csv");
+  std::ofstream fdm_out("/Users/benewilkens/Documents/ArmstrongFin/CSV/fdm.csv");
 
   while(cur_t < t_dom) {
     cur_t = prev_t + dt;
@@ -88,6 +88,7 @@ void FDMEulerExplicit::step_march() {
   fdm_out.close();
 }
 
+//DOESNT work wrll cince the threads are all accecsing the same functions, which are not parallel somehwoe
 void FDMEulerExplicit::calculate_inner_domain_parallel() {
     #pragma omp parallel for
     for (unsigned long j = 1; j < J - 1; j++) {
@@ -113,7 +114,6 @@ void FDMEulerExplicit::calculate_inner_domain_parallel() {
         }
     }
 }
-
 void FDMEulerExplicit::step_march_parallel() {
     std::ofstream fdm_out("/Users/benewilkens/Documents/ArmstrongFin/CSV/fdm.csv");
 
@@ -148,21 +148,22 @@ static void testPDEvisually(){
     bsm->setVolatility(0.2);
 
       // FDM discretisation parameters
-      double x_dom = 100.0;       // Spot goes from [0.0, 1.0]
-      unsigned long J = 4000;
+      double x_dom = 100.0;       // Spot goes from [0.0, x_dom]
+      unsigned long J = 40;       //1/J space discretization
       double t_dom = c->getMaturity();         // Time period as for the option
-      unsigned long N = 100;
+      unsigned long N = 100;       //1/N time discretization
         
       // Create the PDE and FDM objects
       std::shared_ptr<BlackScholesPDE> bs_pde = std::make_shared<BlackScholesPDE>(c, bsm);
       FDMEulerExplicit fdm_euler(x_dom, J, t_dom, N, bs_pde);
 
       // Run the FDM solver
-    std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+    //std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
     fdm_euler.step_march();
-    std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
-    std::cout << "Time difference = " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << "[µs]" << std::endl;
-    std::cout << "Time difference = " << pow(10,-6)*std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << "[s]" << std::endl;
+    //std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+    //std::cout << option_value.size() << " Options were priced in "<< pow(10,-6)*std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << "[s]" << std::endl;
+    //std::cout << "Time difference = " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << "[µs]" << std::endl;
+    //std::cout << "Time difference = " << pow(10,-6)*std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << "[s]" << std::endl;
     
     std::vector<double> option_value(J,0.0);
     fdm_euler.copy_result(option_value);
@@ -171,7 +172,6 @@ static void testPDEvisually(){
     //print(option_value);
     
     vector<double> spots = linspace(dx, x_dom, J );
-    
     LineChart linechart;
     linechart.setSeries(spots, option_value);
     linechart.setTitle("x-Axis = S_0 spots; y-Axis = option value at t_0");
@@ -180,7 +180,7 @@ static void testPDEvisually(){
     //plot("S0_call_prices.html",spots, option_value );
 }
 
-static void testPDEcallPrices(){
+static void testPDEcallPricesVsBSMprices(){
     std::shared_ptr<CallOption> c = std::make_shared<CallOption>();
     c->setStrike(0.5);
     c->setMaturity(1.0);
@@ -199,7 +199,7 @@ static void testPDEcallPrices(){
       std::shared_ptr<BlackScholesPDE> bs_pde = std::make_shared<BlackScholesPDE>(c, bsm);
       FDMEulerExplicit fdm_euler(x_dom, J, t_dom, N, bs_pde);
 
-      // Run the FDM solver
+    // Run the FDM solver
     fdm_euler.step_march();
     
     std::vector<double> option_value(J,0.0);
@@ -227,11 +227,12 @@ static void testPDEcallPrices(){
         ASSERT_APPROX_EQUAL(call_prices_closed_forsolution[i], option_value[i], 0.05);
         m.setStockPrice(dx+i*dx);
     }
+    
     plot("testCallprices.html", spots, call_prices_closed_forsolution );
     plot("CallPDEprices.html", spots, option_value);
 }
-
-static void testPDEparallel(){
+/*
+static void testPDEparallel(int M){
     std::shared_ptr<CallOption> c = std::make_shared<CallOption>();
     c->setStrike(50.5);
     c->setMaturity(1.0);
@@ -242,25 +243,60 @@ static void testPDEparallel(){
 
       // FDM discretisation parameters
       double x_dom = 100.0;       // Spot goes from [0.0, 1.0]
-      unsigned long J = 4000;
+      unsigned long J = M;
       double t_dom = c->getMaturity();         // Time period as for the option
       unsigned long N = 100;
         
       // Create the PDE and FDM objects
       std::shared_ptr<BlackScholesPDE> bs_pde = std::make_shared<BlackScholesPDE>(c, bsm);
       FDMEulerExplicit fdm_euler(x_dom, J, t_dom, N, bs_pde);
-
-      // Run the FDM solver
+    
+    // Run the parallel FDM solver
+  std::cout << "\n";
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
-    fdm_euler.step_march_parallel();
+  fdm_euler.step_march_parallel();
     std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
-    std::cout << "Time difference = " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << "[µs]" << std::endl;
-    std::cout << "Time difference = " << pow(10,-6)*std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << "[s]" << std::endl;
+    std::cout << "Parallel PDE solver time: " << pow(10,-6)*std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << "[s]" << std::endl;
+    
 }
+*/
+
+static void testPDEspeed(){
+    std::shared_ptr<CallOption> c = std::make_shared<CallOption>();
+    c->setStrike(50.5);
+    c->setMaturity(1.0);
+    
+    std::shared_ptr<BlackScholesModel> bsm = std::make_shared<BlackScholesModel>();
+    bsm->setRiskFreeRate(0.05);
+    bsm->setVolatility(0.2);
+
+      // FDM discretisation parameters
+      double x_dom = 100.0;       // Spot goes from [0.0, x_dom]
+      unsigned long J = 40;
+      double t_dom = c->getMaturity();         // Time period as for the option
+      unsigned long N = 100;
+        
+      // Create the PDE and FDM objects
+      std::shared_ptr<BlackScholesPDE> bs_pde = std::make_shared<BlackScholesPDE>(c, bsm);
+      FDMEulerExplicit fdm_euler(x_dom, J, t_dom, N, bs_pde);
+    
+    // Run the FDM solver
+    std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+    fdm_euler.step_march();
+    std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+    std::cout << J << " Options were priced in "<< pow(10,-6)*std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << "[s]" << std::endl;
+}
+
+/*
+static void testSimpleVsParallel(){
+    int J = 40;
+    //testPDEparallel(J);
+    testPDEsimple(J);
+}
+*/
 
 void testBlackScholesPDE(){
     TEST( testPDEvisually );
-    TEST( testPDEparallel );
-    TEST( testPDEcallPrices );
-    
+    TEST( testPDEspeed );
+    TEST( testPDEcallPricesVsBSMprices );
 }

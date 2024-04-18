@@ -36,6 +36,10 @@ std::vector<double> TwoLevelModel::generatePricePath(double toDate, int nSteps) 
     return path;
 }
 
+std::vector<double> TwoLevelModel::generateRiskNeutralPricePath(double toDate, int nSteps) const{
+    return generatePricePath(toDate, nSteps);
+}
+
 static void testTwoVolatilities(){
     rng("default");
     TwoLevelModel model;

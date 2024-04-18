@@ -1,9 +1,12 @@
 #include "MonteCarloPricer.h"
 #include "BlackScholesModel.h"
+#include "StockPriceModel.h"
 
 #include "matlib.h"
 #include "CallOption.h"
 #include "PutOption.h"
+#include "HestonModel.h"
+#include "ScottChesney.h"
 
 using namespace std;
 
@@ -12,14 +15,14 @@ MonteCarloPricer::MonteCarloPricer() :
     nSteps(100) {
 }
 
-double MonteCarloPricer::price(const ContinuousTimeOption& option, const BlackScholesModel& model ) {
+double MonteCarloPricer::price(const ContinuousTimeOption& option, const StockPriceModel& model ) {
     int nSteps = this->nSteps;
     if (!option.isPathDependent()) {
         nSteps = 1;
     }
     double total = 0.0;
     for (int i=0; i<nScenarios; i++) {
-        vector<double> path= model.generateRiskNeutralPricePath(option.getMaturity(), nSteps );
+        vector<double> path = model.generateRiskNeutralPricePath(option.getMaturity(), nSteps );
         double payoff = option.payoff( path );
         total+= payoff;
     }
@@ -83,11 +86,97 @@ static void testPriceCallOption() {
     m.setStockPrice(100.0);
     m.setDate(1.0);
     m.setDrift(0.1);
-
+    
     MonteCarloPricer pricer;
+    
+    std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
     double price = pricer.price( c, m );
+    std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+    std::cout << " Options were priced in "<< pow(10,-6)*std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << "[s]" << std::endl;
     double expected = c.price( m );
     ASSERT_APPROX_EQUAL( price, expected, 0.1 );
+}
+
+static void testHestonCallOption(){
+    rng("default");
+    
+    double S_0 = 150.0;    // Initial spot price
+    double r = 0.03;     // Risk-free rate
+    double v_0 = 0.01; // Initial volatility
+    double T = 1.00;       // One year until expiry
+    double K = 100;
+
+    double rho = 0.8;     // Correlation of asset and volatility
+    double kappa = 6.21;   // Mean-reversion rate
+    double theta = 0.019;  // Long run average volatility
+    double xi = 0.61;      // "Vol of vol"
+
+    HestonModel hest_euler;
+    hest_euler.setRiskFreeRate(r);
+    hest_euler.setVolatility(v_0);
+    hest_euler.setStockPrice(S_0);
+    hest_euler.setDate(0.0);
+    hest_euler.rho = rho;
+    hest_euler.kappa = kappa;
+    hest_euler.theta = theta;
+    hest_euler.xi = xi;      // "Vol of vol"
+
+    // Create the PayOff, Option and Heston objects
+    CallOption c;
+    c.setStrike(K);
+    c.setMaturity(T);
+    
+    MonteCarloPricer pricer;
+    pricer.nSteps = 1000;
+    std::cout << "Monte Carlo pricer Heston: " << pricer.price(c, hest_euler) << std::endl;
+    
+    //ASSERT_APPROX_EQUAL(pricer.price(c, hest_euler), c.price(bsm), 0.1);
+}
+
+static void testHestonVsScott(){
+    rng("default");
+    
+    double S_0 = 150.0;    // Initial spot price
+    double r = 0.03;     // Risk-free rate
+    double v_0 = 0.01; // Initial volatility
+    double T = 1.00;       // One year until expiry
+    double date_0 = 0.0;
+    double K = 100;
+
+    double rho = 0.8;     // Correlation of asset and volatility
+    double kappa = 6.21;   // Mean-reversion rate
+    double theta = 0.019;  // Long run average volatility
+    double xi = 0.61;      // "Vol of vol"
+
+    HestonModel hest_euler;
+    hest_euler.setRiskFreeRate(r);
+    hest_euler.setVolatility(v_0);
+    hest_euler.setStockPrice(S_0);
+    hest_euler.setDate(date_0);
+    hest_euler.rho = rho;
+    hest_euler.kappa = kappa;
+    hest_euler.theta = theta;
+    hest_euler.xi = xi;
+    
+    ScottChesney scott_euler;
+    scott_euler.setRiskFreeRate(r);
+    scott_euler.setVolatility(v_0);
+    scott_euler.setStockPrice(S_0);
+    scott_euler.setDate(date_0);
+    scott_euler.rho = rho;
+    scott_euler.kappa = kappa;
+    scott_euler.theta = theta;
+    scott_euler.xi = xi;
+
+    // Create the PayOff, Option and Heston objects
+    CallOption c;
+    c.setStrike(K);
+    c.setMaturity(T);
+    
+    MonteCarloPricer pricer;
+    pricer.nSteps = 1000;
+    std::cout << "Monte Carlo pricer Heston: " << pricer.price(c, hest_euler) << std::endl;
+    std::cout << "Monte Carlo pricer Scott: " << pricer.price(c, scott_euler) << std::endl;
 }
 
 static void testDeltaCall(){
@@ -127,13 +216,6 @@ static void testDeltaPut(){
     m.setStockPrice(100.0);
     m.setDate(1.0);
     m.setDrift(0.1);
-    /*
-    m.volatility = 0.1;
-    m.riskFreeRate = 0.05;
-    m.stockPrice = 100.0;
-    m.drift = 0.1;
-    m.date = 1;
-     */
     
     MonteCarloPricer pricer;
     double answer = pricer.delta(p, m);
@@ -146,4 +228,6 @@ void testMonteCarloPricer() {
     TEST( testPriceCallOption );
     TEST( testDeltaCall );
     TEST( testDeltaPut );
+    TEST( testHestonCallOption );
+    TEST( testHestonVsScott );
 }

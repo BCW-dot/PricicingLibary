@@ -105,9 +105,9 @@ void rng( const string& description ) {
 }
 
 /*  Create uniformly distributed random numbers using 
-    the Mersenne Twister algorithm. See the code above for the answer
-    to the homework excercise which should familiarize you with the C API*/
+    the Mersenne Twister algorithm.*/
 vector<double> randuniform( int n ) {
+    //mersenneTwister.seed( time( NULL) );
     vector<double> ret(n, 0.0);
     for (int i=0; i<n; i++) {
         ret[i] = (mersenneTwister()+0.5)/(mersenneTwister.max()+1.0);
@@ -118,11 +118,41 @@ vector<double> randuniform( int n ) {
 
 /*  Create normally distributed random numbers */
 vector<double> randn( int n ) {
+    /*
     vector<double> v=randuniform(n);
     for (int i=0; i<n; i++) {
         v[i] = norminv(v[i]);
     }
+     */
+    
+    vector<double> v(n,0.0);
+    std::default_random_engine generator;
+    generator.seed( time(NULL) );
+    std::normal_distribution<double> distribution(0.0,1.0);
+    for (int i=0; i<n; i++) {
+        v[i] = distribution(generator);
+    }
+     
     return v;
+}
+
+void fill_correlated_normals(vector<double>& n1, vector<double>& n2, double rho){
+    int n = n1.size();
+    int m = n2.size();
+    ASSERT(n = m);
+    ASSERT(rho <= 1 && rho >=-1);
+    
+    vector<double> v1 = randn(n);
+    vector<double> v2 = randn(n);
+    
+    vector<double> v3(n,0.0);
+    
+    for(int i=0; i<n; i++ ){
+        v3[i] = rho*v1[i] + sqrt(1-rho*rho)*v2[i];
+    }
+    
+    n1 = v1;
+    n2 = v3;
 }
 
 /**
@@ -361,6 +391,16 @@ static void testParallelSum(){
     std::cout<< "Sum parallel = " << answer_parallel;
 }
 
+void writeVectorsToCsv(const std::vector<double>& v1, const std::vector<double>& t, const std::vector<double>& v2, std::string& filename){
+    //file = "/Users/benewilkens/Documents/ArmstrongFin/Plots/" + filename;
+    std::ofstream fdm_out(filename);
+
+    // Write data
+    for (int j=0; j<t.size(); j++) {
+      fdm_out << v1[j] << " " << t[j] << " " << v2[j] << std::endl;
+    }
+    fdm_out.close();
+}
 
 ///////////////////////////////////////////////
 //
@@ -413,8 +453,9 @@ static void testRanduniform() {
 }
 
 static void testRandn() {
-    rng("default");
+    //rng("default");
     vector<double> v = randn(10000);
+    std::cout << "Normal Mean: " << mean(v) << std::endl;
     ASSERT( ((int)v.size())==10000 );
     ASSERT_APPROX_EQUAL( mean(v), 0.0, 0.1);
     ASSERT_APPROX_EQUAL( standardDeviation(v), 1.0, 0.1);

@@ -59,9 +59,8 @@ double integral( RealFunction& f,
 
 double sum_parallel(std::vector<double>& v);
 double sum_simple(std::vector<double> v);
-
-
-
+void writeVectorsToCsv(const std::vector<double>& v1, const std::vector<double>& t, const std::vector<double>& v2, std::string& filename);
+void fill_correlated_normals(std::vector<double>& n1, std::vector<double>& n2, double rho);
 
 
 

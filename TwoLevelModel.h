@@ -19,7 +19,7 @@ public:
     TwoLevelModel();
     double volatility2;
     std::vector<double> generatePricePath(double toDate, int nSteps) const;
-    std::vector<double> generateRiskNeutralPricePath(double toDate, int nSteps) const;
+    std::vector<double> generateRiskNeutralPricePath(double toDate, int nSteps) const; //
 };
 
 void testTwoLevelModel();
