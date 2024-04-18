@@ -118,13 +118,13 @@ vector<double> randuniform( int n ) {
 
 /*  Create normally distributed random numbers */
 vector<double> randn( int n ) {
-    /*
+    
     vector<double> v=randuniform(n);
     for (int i=0; i<n; i++) {
         v[i] = norminv(v[i]);
     }
-     */
-    
+     
+    /*
     vector<double> v(n,0.0);
     std::default_random_engine generator;
     generator.seed( time(NULL) );
@@ -132,7 +132,7 @@ vector<double> randn( int n ) {
     for (int i=0; i<n; i++) {
         v[i] = distribution(generator);
     }
-     
+     */
     return v;
 }
 

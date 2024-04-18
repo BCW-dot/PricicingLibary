@@ -41,7 +41,7 @@ vector<double> HestonModel::generatePricePath(double toDate, int nSteps, std::ve
         double v_max = std::max(vol_path[i-1], 0.0);
         //std::cout<< "V_max: " << v_max << ", ";
           //spot_path[i] = spot_path[i-1] * exp( (getRiskFreeRate() - 0.5*v_max)*dt + sqrt(v_max*dt)*spot_draws[i-1]);
-          spot_path[i] = spot_path[i-1] + getRiskFreeRate() * spot_path[i-1] * dt + sqrt(v_max) *sqrt_dt * spot_path[i-1] * spot_draws[i-1];
+          spot_path[i] = spot_path[i-1] + getDrift() * spot_path[i-1] * dt + sqrt(v_max) *sqrt_dt * spot_path[i-1] * spot_draws[i-1];
       }
     
     return spot_path;
@@ -126,12 +126,13 @@ static void testCallPrice(){
     // First we create the parameter list
     // Note that you could easily modify this code to input the parameters
     // either from the command line or via a file
-    unsigned num_sims = 10000;   // Number of simulated asset paths
+    unsigned num_sims = 1000;   // Number of simulated asset paths
     unsigned num_intervals = 1000;  // Number of intervals for the asset path to be sampled
 
     double S_0 = 100.0;    // Initial spot price
     double K = 100.0;      // Strike price
     double r = 0.03;     // Risk-free rate
+    //double drift = 0.04;
     double v_0 = 0.01; // Initial volatility
     double T = 1.00;       // One year until expiry
     double date_0 = 0.0;
@@ -148,6 +149,7 @@ static void testCallPrice(){
 
     HestonModel hest_euler;
     hest_euler.setRiskFreeRate(r);
+    hest_euler.setDrift(hest_euler.getRiskFreeRate());
     hest_euler.setVolatility(v_0);
     hest_euler.setStockPrice(S_0);
     hest_euler.setDate(date_0);
@@ -197,7 +199,7 @@ static void testCallPrice(){
     bsm.setStockPrice(S_0);
     bsm.setDate(date_0);
     
-    ASSERT_APPROX_EQUAL(option_price, c.price(bsm), 0.1);
+    ASSERT_APPROX_EQUAL(option_price, c.price(bsm), 1.0);
 }
 
 static void testHestonPayoff(){

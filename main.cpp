@@ -50,8 +50,8 @@ int main() {
     //testHedgingSimulator();
     //testTwoLevelModel();
     //testBlackScholesPDE();
-    testMatlib();
+    //testMatlib();
     //testHestonModel();
-    //testScottChesneyModel();
+    testScottChesneyModel();
     return 0;
 }

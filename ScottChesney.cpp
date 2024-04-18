@@ -41,7 +41,7 @@ vector<double> ScottChesney::generatePricePath(double toDate, int nSteps, std::v
       double v_e = std::exp(vol_path[i-1]);
       //std::cout<< "V_max: " << v_max << ", ";
         //spot_path[i] = spot_path[i-1] * exp( (getRiskFreeRate() - 0.5*v_e)*dt + v_e * sqrt(dt)*spot_draws[i-1]);
-        spot_path[i] = spot_path[i-1] + getRiskFreeRate() * spot_path[i-1] * dt + v_e * spot_path[i-1] * sqrt_dt * spot_draws[i-1];
+        spot_path[i] = spot_path[i-1] + getDrift() * spot_path[i-1] * dt + v_e * spot_path[i-1] * sqrt_dt * spot_draws[i-1];
     }
     
     return spot_path;
@@ -66,8 +66,9 @@ static void testScottChesneyVisually(){
 
     double S_0 = 100.0;    // Initial spot price
     //double K = 100.0;      // Strike price
-    double r = 0.0319;     // Risk-free rate
-    double v_0 = 0.010201; // Initial volatility
+    double r = 0.03;     // Risk-free rate
+    double drift = 0.04;
+    double v_0 = 0.01; // Initial volatility
     double T = 1.00;       // One year until expiry
     double date_0 = 0.0;
 
@@ -78,6 +79,7 @@ static void testScottChesneyVisually(){
 
     ScottChesney hest_euler;
     hest_euler.setRiskFreeRate(r);
+    hest_euler.setDrift(drift);
     hest_euler.setVolatility(v_0);
     hest_euler.setStockPrice(S_0);
     hest_euler.setDate(date_0);
@@ -116,7 +118,8 @@ static void testScottChesneyPayoff(){
 
     double S_0 = 100.0;    // Initial spot price
     double K = 100.0;      // Strike price
-    double r = 0.0319;     // Risk-free rate
+    double r = 0.03;     // Risk-free rate
+    double drift = 0.04;
     double v_0 = 0.010201; // Initial volatility
     double T = 1.00;       // One year until expiry
     double date_0 = 0.0;
@@ -128,6 +131,7 @@ static void testScottChesneyPayoff(){
 
     ScottChesney hest_euler;
     hest_euler.setRiskFreeRate(r);
+    hest_euler.setDrift(drift);
     hest_euler.setVolatility(v_0);
     hest_euler.setStockPrice(S_0);
     hest_euler.setDate(date_0);
@@ -174,6 +178,7 @@ static void testCallPrice(){
     double S_0 = 100.0;    // Initial spot price
     double K = 100.0;      // Strike price
     double r = 0.03;     // Risk-free rate
+    //double drift = 0.04;
     double v_0 = 0.01; // Initial volatility
     double T = 1.00;       // One year until expiry
     double date_0 = 0.0;
@@ -190,6 +195,7 @@ static void testCallPrice(){
 
     ScottChesney hest_euler;
     hest_euler.setRiskFreeRate(r);
+    hest_euler.setDrift(hest_euler.getRiskFreeRate());
     hest_euler.setVolatility(v_0);
     hest_euler.setStockPrice(S_0);
     hest_euler.setDate(date_0);
