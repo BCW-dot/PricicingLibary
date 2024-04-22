@@ -40,8 +40,8 @@ vector<double> ScottChesney::generatePricePath(double toDate, int nSteps, std::v
     for (int i=1; i<nSteps; i++) {
       double v_e = std::exp(vol_path[i-1]);
       //std::cout<< "V_max: " << v_max << ", ";
-        //spot_path[i] = spot_path[i-1] * exp( (getRiskFreeRate() - 0.5*v_e)*dt + v_e * sqrt(dt)*spot_draws[i-1]);
-        spot_path[i] = spot_path[i-1] + getDrift() * spot_path[i-1] * dt + v_e * spot_path[i-1] * sqrt_dt * spot_draws[i-1];
+      //spot_path[i] = spot_path[i-1] * exp( (getRiskFreeRate() - 0.5*v_e)*dt + v_e * sqrt(dt)*spot_draws[i-1]);
+      spot_path[i] = spot_path[i-1] + getDrift() * spot_path[i-1] * dt + v_e * spot_path[i-1] * sqrt_dt * spot_draws[i-1];
     }
     
     return spot_path;
@@ -61,6 +61,7 @@ vector<double> ScottChesney::calc_vol_path(double toDate, int nSteps, const std:
 }
 
 static void testScottChesneyVisually(){
+    my_rng();
     // First we create the parameter list
     unsigned num_intervals = 1000;  // Number of intervals for the asset path to be sampled
 
@@ -107,9 +108,12 @@ static void testScottChesneyVisually(){
 
     plot("exampleScottChesneyPricePath.html",times, spot_prices );
     plot("exampleScottChesneyVolPath.html",times, vol_prices );
+    //open_plot("exampleScottChesneyPricePath.html");
+    //open_plot("exampleScottChesneyVolPath.html");
 }
 
 static void testScottChesneyPayoff(){
+    my_rng();
     // First we create the parameter list
     // Note that you could easily modify this code to input the parameters
     // either from the command line or via a file
@@ -169,6 +173,7 @@ static void testScottChesneyPayoff(){
 }
 
 static void testCallPrice(){
+    my_rng();
     // First we create the parameter list
     // Note that you could easily modify this code to input the parameters
     // either from the command line or via a file

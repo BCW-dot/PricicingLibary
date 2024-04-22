@@ -104,9 +104,21 @@ void rng( const string& description ) {
     mersenneTwister.seed(mt19937::default_seed);
 }
 
+void my_rng() {
+    mersenneTwister.seed(time( NULL));
+}
+
 /*  Create uniformly distributed random numbers using 
     the Mersenne Twister algorithm.*/
 vector<double> randuniform( int n ) {
+    vector<double> ret(n, 0.0);
+    for (int i=0; i<n; i++) {
+        ret[i] = (mersenneTwister()+0.5)/(mersenneTwister.max()+1.0);
+    }
+    return ret;
+}
+
+vector<double> my_randuniform( int n ) {
     //mersenneTwister.seed( time( NULL) );
     vector<double> ret(n, 0.0);
     for (int i=0; i<n; i++) {
@@ -118,12 +130,18 @@ vector<double> randuniform( int n ) {
 
 /*  Create normally distributed random numbers */
 vector<double> randn( int n ) {
-    
     vector<double> v=randuniform(n);
     for (int i=0; i<n; i++) {
         v[i] = norminv(v[i]);
     }
-     
+    return v;
+}
+
+vector<double> my_randn( int n ) {
+    vector<double> v = my_randuniform(n);
+    for (int i=0; i<n; i++) {
+        v[i] = norminv(v[i]);
+    }
     /*
     vector<double> v(n,0.0);
     std::default_random_engine generator;
@@ -153,6 +171,64 @@ void fill_correlated_normals(vector<double>& n1, vector<double>& n2, double rho)
     
     n1 = v1;
     n2 = v3;
+}
+
+void open_plot(std::string file_name){
+    std::string htmlFilePath = "/Users/benewilkens/Documents/ArmstrongFin/Plots/" + file_name;
+    //const char* command = "open %s";
+    //std::string openCommand[200];
+    //sprintf(openCommand, command, htmlFilePath);
+    //system(openCommand);
+    
+    // Command to open the HTML file with the default browser
+    //std::string command = "open " + htmlFilePath; // "open" is the command to open files in Mac
+    // Execute the command
+    //system(command.c_str());
+    
+    const char* command = "open %s"; // "open" is the command to open files in Mac
+        
+        // Create a buffer to hold the command with file path
+        char openCommand[200]; // Adjust size as needed
+        
+        // Format the command with the file path
+        sprintf(openCommand, command, htmlFilePath.c_str());
+        
+        // Execute the command
+        system(openCommand);
+}
+
+void open_hist(std::string file_name){
+    std::string htmlFilePath = "/Users/benewilkens/Documents/ArmstrongFin/Histograms/" + file_name;
+    //const char* command = "open %s";
+    //std::string openCommand[200];
+    //sprintf(openCommand, command, htmlFilePath);
+    //system(openCommand);
+    
+    // Command to open the HTML file with the default browser
+    //std::string command = "open " + htmlFilePath; // "open" is the command to open files in Mac
+    // Execute the command
+    //system(command.c_str());
+    
+    const char* command = "open %s"; // "open" is the command to open files in Mac
+        
+        // Create a buffer to hold the command with file path
+        char openCommand[200]; // Adjust size as needed
+        
+        // Format the command with the file path
+        sprintf(openCommand, command, htmlFilePath.c_str());
+        
+        // Execute the command
+        system(openCommand);
+}
+
+void print_window(std::vector<double> v, int start, int end){
+    ASSERT(start >= 0);
+    ASSERT(end < v.size());
+    std::cout << "{";
+    for(int i = start; i<end-1; i++){
+        std::cout << v[i] << ", ";
+    }
+    std::cout << v[end] << "}" << std::endl;
 }
 
 /**

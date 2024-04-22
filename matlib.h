@@ -25,6 +25,14 @@ std::vector<double> sort( const std::vector<double>&  v );
 std::vector<double> randuniform( int n );
 /*  Create normally distributed random numbers */
 std::vector<double> randn( int n );
+std::vector<double> my_randn( int n );
+std::vector<double> my_randuniform( int n );
+void my_rng();
+/* open a plot/hist right away */
+void open_plot(std::string file_name);
+void open_hist(std::string file_name);
+/* print a window of a vector */
+void print_window(std::vector<double> v, int start, int end);
 /*  Seeds the default random number generator */
 void rng( const std::string& setting );
 

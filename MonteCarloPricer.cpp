@@ -17,9 +17,11 @@ MonteCarloPricer::MonteCarloPricer() :
 
 double MonteCarloPricer::price(const ContinuousTimeOption& option, const StockPriceModel& model ) {
     int nSteps = this->nSteps;
+    /*
     if (!option.isPathDependent()) {
         nSteps = 1;
     }
+     */
     double total = 0.0;
     for (int i=0; i<nScenarios; i++) {
         vector<double> path = model.generateRiskNeutralPricePath(option.getMaturity(), nSteps );
@@ -74,7 +76,7 @@ double MonteCarloPricer::delta(const ContinuousTimeOption& option, const BlackSc
 //////////////////////////////////////
 
 static void testPriceCallOption() {
-    rng("default");
+    my_rng();
 
     CallOption c;
     c.setStrike( 110 );
@@ -92,15 +94,15 @@ static void testPriceCallOption() {
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
     double price = pricer.price( c, m );
     std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
-    std::cout << " Options were priced in "<< pow(10,-6)*std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << "[s]" << std::endl;
+    std::cout << " Option were priced in "<< pow(10,-6)*std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << "[s]" << std::endl;
     double expected = c.price( m );
     ASSERT_APPROX_EQUAL( price, expected, 0.1 );
 }
 
 static void testHestonCallOption(){
-    rng("default");
+    my_rng();
     
-    double S_0 = 150.0;    // Initial spot price
+    double S_0 = 100.0;    // Initial spot price
     double r = 0.03;     // Risk-free rate
     double v_0 = 0.01; // Initial volatility
     double T = 1.00;       // One year until expiry
@@ -134,9 +136,9 @@ static void testHestonCallOption(){
 }
 
 static void testHestonVsScott(){
-    rng("default");
+    my_rng();
     
-    double S_0 = 150.0;    // Initial spot price
+    double S_0 = 100.0;    // Initial spot price
     double r = 0.03;     // Risk-free rate
     double v_0 = 0.01; // Initial volatility
     double T = 1.00;       // One year until expiry
@@ -174,7 +176,7 @@ static void testHestonVsScott(){
     c.setMaturity(T);
     
     MonteCarloPricer pricer;
-    pricer.nSteps = 1000;
+    pricer.nSteps = 100;
     std::cout << "Monte Carlo pricer Heston: " << pricer.price(c, hest_euler) << std::endl;
     std::cout << "Monte Carlo pricer Scott: " << pricer.price(c, scott_euler) << std::endl;
 }

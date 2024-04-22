@@ -12,11 +12,9 @@ std::vector<double> HestonModel::generatePricePath(double toDate, int nSteps) co
     
     std::vector<double> vol_path(nSteps, 0.0);
     vol_path = calc_vol_path(toDate, nSteps, vol_draws);
-    //this doesnt work! need to add correlate_(vol,spot)
     return generatePricePath(toDate, nSteps, vol_path, spot_draws);
 }
 
-/*
 std::vector<double> HestonModel::generateRiskNeutralPricePath(double toDate, int nSteps) const{
     std::vector<double> vol_draws(nSteps, 0.0);
     std::vector<double> spot_draws(nSteps, 0.0);
@@ -24,10 +22,8 @@ std::vector<double> HestonModel::generateRiskNeutralPricePath(double toDate, int
     
     std::vector<double> vol_path(nSteps, 0.0);
     vol_path = calc_vol_path(toDate, nSteps, vol_draws);
-    //this doesnt work! need to add correlate_(vol,spot)
     return generatePricePath(toDate, nSteps, vol_path, spot_draws);
 }
-*/
 
 vector<double> HestonModel::generatePricePath(double toDate, int nSteps, std::vector<double>& vol_path, std::vector<double>& spot_draws) const{
     vector<double> spot_path(nSteps,0.0);
@@ -44,6 +40,26 @@ vector<double> HestonModel::generatePricePath(double toDate, int nSteps, std::ve
           spot_path[i] = spot_path[i-1] + getDrift() * spot_path[i-1] * dt + sqrt(v_max) *sqrt_dt * spot_path[i-1] * spot_draws[i-1];
       }
     
+    return spot_path;
+}
+
+/* This need correction in the Q-measure term, sqrt_dt placement is unsure right now*/
+vector<double> HestonModel::generateRiskNeutralPricePath(double toDate, int nSteps, std::vector<double>& vol_path, std::vector<double>& spot_draws) const{
+    vector<double> spot_path(nSteps,0.0);
+    spot_path[0] = getStockPrice();
+    double dt = (toDate-getDate())/nSteps;
+    double sqrt_dt = sqrt(dt);
+
+      // Create the spot price path making use of the volatility
+      // path. Uses a similar Euler Truncation method to the vol path.
+      for (int i=1; i<nSteps; i++) {
+        double sqrt_v_max = sqrt(std::max(vol_path[i-1], 0.0));
+        double Q_measure_brownian = sqrt_dt * spot_draws[i-1] + (getDrift() - getRiskFreeRate())/sqrt_v_max * dt;
+    
+        spot_path[i] = spot_path[i-1] + getRiskFreeRate() * spot_path[i-1] * dt + sqrt_v_max * spot_path[i-1] * Q_measure_brownian;
+          /* Log stock price */
+          //spot_path[i] = spot_path[i-1] + (getRiskFreeRate() - 0.5) *dt + sqrt(v_max) * Q_measure_brownian;
+      }
     return spot_path;
 }
 
@@ -72,6 +88,7 @@ vector<double> HestonModel::calc_vol_path(double toDate, int nSteps, const std::
  */
 
 static void testHestonVisually(){
+    my_rng();
     // First we create the parameter list
     // Note that you could easily modify this code to input the parameters
     // either from the command line or via a file
@@ -111,18 +128,15 @@ static void testHestonVisually(){
     double dt = (T-hest_euler.getDate())/num_intervals;
     vector<double> times = linspace(dt, T, num_intervals );
     
-    std::string filename = "/Users/benewilkens/Documents/ArmstrongFin/CSV/Heston.csv";
-    writeVectorsToCsv(spot_prices, times, vol_prices, filename);
+    //std::string filename = "/Users/benewilkens/Documents/ArmstrongFin/CSV/Heston.csv";
+    //writeVectorsToCsv(spot_prices, times, vol_prices, filename);
 
-    //double dt = (T-hest_euler.getDate())/num_intervals;
-    //vector<double> times = linspace(dt, T, num_intervals );
     plot("exampleHestonPricePath.html",times, spot_prices );
     plot("exampleHestonVolPath.html",times, vol_prices );
-    //plot("correlatedMovement.html", times, spot_draws);
-    //plot("correlatedMovement2.html", times, vol_draws);
 }
 
 static void testCallPrice(){
+    my_rng();
     // First we create the parameter list
     // Note that you could easily modify this code to input the parameters
     // either from the command line or via a file
@@ -168,8 +182,6 @@ static void testCallPrice(){
     double payoff_sum = 0.0;
     //std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
     for (unsigned i=0; i<num_sims; i++) {
-      //std::cout << "Calculating path " << i+1 << " of " << num_sims << std::endl;
-      //generate_normal_correlation_paths(rho, spot_draws, vol_draws);
       fill_correlated_normals(vol_draws, spot_draws, rho);
       //vol_prices = hest_euler.calc_vol_path(T, num_intervals, vol_draws);
       spot_prices = hest_euler.generatePricePath(T, num_intervals, vol_prices, spot_draws);
@@ -199,10 +211,11 @@ static void testCallPrice(){
     bsm.setStockPrice(S_0);
     bsm.setDate(date_0);
     
-    ASSERT_APPROX_EQUAL(option_price, c.price(bsm), 1.0);
+    ASSERT_APPROX_EQUAL(option_price, c.price(bsm), 0.1);
 }
 
 static void testHestonPayoff(){
+    my_rng();
     // First we create the parameter list
     // Note that you could easily modify this code to input the parameters
     // either from the command line or via a file
@@ -236,24 +249,28 @@ static void testHestonPayoff(){
     hest_euler.theta = theta;
     hest_euler.xi = xi;
 
-    // Create the spot and vol initial normal and price paths
-    std::vector<double> spot_draws(num_intervals, 0.0);  // Vector of initial spot normal draws
-    std::vector<double> vol_draws(num_intervals, 0.0);   // Vector of initial correlated vol normal draws
-    std::vector<double> spot_prices(num_intervals, S_0);  // Vector of initial spot prices
-    std::vector<double> vol_prices(num_intervals, v_0);   // Vector of initial vol prices
-
+    std::vector<double> spot_prices;//(num_intervals, S_0);  // Vector of initial spot prices
+    std::vector<double> hist_of_last_prices(num_intervals, 0.0);
+    
     // Monte Carlo options pricing
     double payoff_sum = 0.0;
-    for (unsigned i=0; i<num_sims; i++) {
-      //std::cout << "Calculating path " << i+1 << " of " << num_sims << std::endl;
-      //generate_normal_correlation_paths(rho, spot_draws, vol_draws);
-      fill_correlated_normals(vol_draws, spot_draws, rho);
-      vol_prices = hest_euler.calc_vol_path(T, num_intervals, vol_draws);
-        spot_prices = hest_euler.generatePricePath(T, num_intervals);//hest_euler.generatePricePath(T, num_intervals, vol_prices, spot_draws);
+    for (int i=0; i<num_sims; i++) {
+      spot_prices = hest_euler.generateRiskNeutralPricePath(T, num_intervals);//hest_euler.generatePricePath(T, num_intervals, vol_prices, spot_draws);
       payoff_sum += c.payoff(spot_prices);
+      hist_of_last_prices[i] = spot_prices.back();
     }
     double option_price = (payoff_sum / static_cast<double>(num_sims)) * exp(-r*T);
     std::cout << "Option Price Heston: " << option_price << std::endl;
+    //hist("HestonPrices.html",hist_of_last_prices,100);
+    //open_hist("HestonPrices.html");
+    
+    BlackScholesModel bsm;
+    bsm.setRiskFreeRate(r);
+    bsm.setVolatility(v_0);
+    bsm.setStockPrice(S_0);
+    bsm.setDate(date_0);
+    
+    std::cout << "Black Shcoles price: " << c.price(bsm) << std::endl;
 }
 
 static void testGenPricePath(){
@@ -280,13 +297,19 @@ static void testGenPricePath(){
     hest_euler.xi = xi;
 
     std::vector<double> spot_prices(num_intervals,0.0);
+    std::vector<double> spot_prices_RiskNeutral(num_intervals,0.0);
     
     spot_prices = hest_euler.generatePricePath(T, num_intervals);
+    spot_prices_RiskNeutral = hest_euler.generateRiskNeutralPricePath(T, num_intervals);
     
     double dt = (T-hest_euler.getDate())/num_intervals;
     vector<double> times = linspace(dt, T, num_intervals );
 
     plot("exampleHestonGenPath.html",times, spot_prices );
+    //open_plot("exampleHestonGenPath.html");
+    
+    plot("exampleHestonGenPathRiskNeutral.html",times, spot_prices_RiskNeutral );
+    //open_plot("exampleHestonGenPathRiskNeutral.html");
 }
 
 void testHestonModel(){

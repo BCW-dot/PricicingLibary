@@ -51,7 +51,7 @@ int main() {
     //testTwoLevelModel();
     //testBlackScholesPDE();
     //testMatlib();
-    //testHestonModel();
-    testScottChesneyModel();
+    testHestonModel();
+    //testScottChesneyModel();
     return 0;
 }
