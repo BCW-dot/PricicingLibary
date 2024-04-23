@@ -312,9 +312,53 @@ static void testGenPricePath(){
     //open_plot("exampleHestonGenPathRiskNeutral.html");
 }
 
+static void testRiskNeutralPricing(){
+    /* This tests Risk Neutral pricing of the heston model */
+    
+    /* DOESNT WORK YET */
+    my_rng();
+    // First we create the parameter list
+    // Note that you could easily modify this code to input the parameters
+    // either from the command line or via a file
+    unsigned num_sims = 1000;   // Number of simulated asset paths
+    unsigned num_intervals = 1000;  // Number of intervals for the asset path to be sampled
+
+    double S_0 = 100.0;    // Initial spot price
+    double r = 0.03;     // Risk-free rate
+    double v_0 = 0.01; // Initial volatility
+    double date_0 = 0.0;    //Initial date
+    double T = 1.00;       // One year until expiry
+
+    double rho = 0.8;     // Correlation of asset and volatility
+    double kappa = 3.0;   // Mean-reversion rate
+    double theta = 0.02;  // Long run average volatility
+    double xi = 0.01;      // "Vol of vol"
+
+    HestonModel hest_euler;
+    hest_euler.setRiskFreeRate(r);
+    hest_euler.setVolatility(v_0);
+    hest_euler.setStockPrice(S_0);
+    hest_euler.setDate(date_0);
+    hest_euler.rho = rho;
+    hest_euler.kappa = kappa;
+    hest_euler.theta = theta;
+    hest_euler.xi = xi;
+
+    std::vector<double> spot_prices;//(num_intervals, S_0);  // Vector of initial spot prices
+    std::vector<double> hist_of_last_prices(num_intervals, 0.0);
+    
+    for (int i=0; i<num_sims; i++) {
+      spot_prices = hest_euler.generateRiskNeutralPricePath(T, num_intervals);
+      hist_of_last_prices[i] = exp(-hest_euler.getRiskFreeRate()*T)*spot_prices.back();
+    }
+    hist("HestonRiskNeutralPrices.html",hist_of_last_prices,100);
+    open_hist("HestonRiskNeutralPrices.html");
+}
+
 void testHestonModel(){
     TEST( testHestonPayoff );
     TEST( testHestonVisually );
     TEST( testCallPrice );
     TEST( testGenPricePath );
+    TEST( testRiskNeutralPricing );
 }
