@@ -21,6 +21,7 @@ vector<double> BlackScholesModel::generatePricePath(double toDate, int nSteps ) 
 /**
  *  Creates a price path according to the model parameters
  */
+/*
 vector<double> BlackScholesModel::generatePricePath(double toDate, int nSteps, double drift ) const {
     vector<double> path(nSteps,0.0);
     vector<double> epsilon = randn( nSteps );
@@ -33,6 +34,19 @@ vector<double> BlackScholesModel::generatePricePath(double toDate, int nSteps, d
         double logS = currentLogS + dLogS;
         path[i] = exp( logS );
         currentLogS = logS;
+    }
+    return path;
+}
+ */
+
+vector<double> BlackScholesModel::generatePricePath(double toDate, int nSteps, double drift ) const {
+    vector<double> path(nSteps,0.0);
+    path[0] = getStockPrice();
+    vector<double> epsilon = randn( nSteps );
+    double dt = (toDate-getDate())/nSteps;
+    double sqrt_dt = sqrt(dt);
+    for (int i=1; i<nSteps; i++) {
+        path[i] = path[i-1] + drift * path[i-1] * dt + getVolatility() * path[i-1] * sqrt_dt * epsilon[i];
     }
     return path;
 }
@@ -69,7 +83,7 @@ void testRiskNeutralPricePath() {
     BlackScholesModel bsm;
     bsm.setRiskFreeRate(0.05);
     bsm.setVolatility(0.1);
-    bsm.setStockPrice(100.0);
+    bsm.setStockPrice(10.0);
     bsm.setDate(2.0);
 
     int nPaths = 10000;
@@ -82,6 +96,7 @@ void testRiskNeutralPricePath() {
     }
     ASSERT_APPROX_EQUAL( mean( finalPrices ), exp( bsm.getRiskFreeRate()*2.0)*bsm.getStockPrice(), 0.5);
     //std::cout << mean( finalPrices ) << std::endl;
+    //std::cout << exp( bsm.getRiskFreeRate()*2.0)*bsm.getStockPrice() << std::endl;
 }
 
 void testVisually() {
@@ -90,11 +105,12 @@ void testVisually() {
     BlackScholesModel bsm;
     bsm.setRiskFreeRate(0.05);
     bsm.setVolatility(0.1);
+    bsm.setDrift(0.05);
     bsm.setStockPrice(100.0);
-    bsm.setDate(2.0);
+    bsm.setDate(0.0);
 
     int nSteps = 1000;
-    double maturity = 4.0;
+    double maturity = 1.0;
 
     vector<double> path = bsm.generateRiskNeutralPricePath( maturity, nSteps );
     
@@ -130,7 +146,7 @@ void testRiskNeutralPricing(){
     
     for (int i=0; i<num_sims; i++) {
       spot_prices = bsm.generateRiskNeutralPricePath(T, num_intervals);
-      hist_of_last_prices[i] = exp(-bsm.getRiskFreeRate()*T)* spot_prices.back();
+      hist_of_last_prices[i] = exp(-bsm.getRiskFreeRate()*T)*spot_prices.back();
     }
     hist("GBMRiskNeutralPrices.html",hist_of_last_prices,100);
     open_hist("GBMRiskNeutralPrices.html");
@@ -183,24 +199,23 @@ static void testGBM(){
     //open_plot("examplePricePathmy.html");
     //open_plot("examplePricePathmy1.html");
 }
+ 
+ void testRandomNumberGeneration(){
+     int n = 10000;
+     int M = 3;
+     n = M;
+     //my_rng();
+     //vector<double> nor = my_randn(n);
+     for(int i =0; i<M; i++){
+         vector<double> nor = randn(n);
+         print_window(nor, 0, 10);
+         std::cout << "Mean: " << mean(nor) << ", " << std::endl;
+     }
+    
+     //hist("NormalTestMYrandn.html", nor, 100);
+     //open_hist("NormalTestMYrandn.html");
+ }
 */
-
-void testRandomNumberGeneration(){
-    int n = 10000;
-    int M = 3;
-    n = M;
-    //my_rng();
-    //vector<double> nor = my_randn(n);
-    /*
-    for(int i =0; i<M; i++){
-        vector<double> nor = randn(n);
-        print_window(nor, 0, 10);
-        std::cout << "Mean: " << mean(nor) << ", " << std::endl;
-    }
-     */
-    //hist("NormalTestMYrandn.html", nor, 100);
-    //open_hist("NormalTestMYrandn.html");
-}
 
 void testBlackScholesModel() {
     TEST( testRiskNeutralPricePath );

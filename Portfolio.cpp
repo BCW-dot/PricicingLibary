@@ -43,8 +43,7 @@ int PortfolioImpl::add( double quantity,
     return quantities.size();
 }
 
-double PortfolioImpl::price(
-        const BlackScholesModel& model ) const {
+double PortfolioImpl::price( const BlackScholesModel& model ) const {
     double ret = 0;
     int n = size();
     for (int i=0; i<n; i++) {

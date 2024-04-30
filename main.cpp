@@ -45,12 +45,12 @@ int main() {
     testPortfolio();
 	testHedgingSimulator();
 	*/
-    //testBlackScholesModel();
     //testMonteCarloPricer();
     //testHedgingSimulator();
     //testTwoLevelModel();
     //testBlackScholesPDE();
     //testMatlib();
+    //testBlackScholesModel();
     testHestonModel();
     //testScottChesneyModel();
     return 0;

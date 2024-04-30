@@ -22,7 +22,7 @@ std::vector<double> HestonModel::generateRiskNeutralPricePath(double toDate, int
     
     std::vector<double> vol_path(nSteps, 0.0);
     vol_path = calc_vol_path(toDate, nSteps, vol_draws);
-    return generatePricePath(toDate, nSteps, vol_path, spot_draws);
+    return generateRiskNeutralPricePath(toDate, nSteps, vol_path, spot_draws);
 }
 
 vector<double> HestonModel::generatePricePath(double toDate, int nSteps, std::vector<double>& vol_path, std::vector<double>& spot_draws) const{
@@ -49,13 +49,13 @@ vector<double> HestonModel::generateRiskNeutralPricePath(double toDate, int nSte
     spot_path[0] = getStockPrice();
     double dt = (toDate-getDate())/nSteps;
     double sqrt_dt = sqrt(dt);
+    double epsilon = 1e-5; //need this since we would devite by zero else in Q_measure_BM
 
       // Create the spot price path making use of the volatility
       // path. Uses a similar Euler Truncation method to the vol path.
       for (int i=1; i<nSteps; i++) {
-        double sqrt_v_max = sqrt(std::max(vol_path[i-1], 0.0));
-        double Q_measure_brownian = sqrt_dt * spot_draws[i-1] + (getDrift() - getRiskFreeRate())/sqrt_v_max * dt;
-    
+        double sqrt_v_max = sqrt(std::max(vol_path[i-1], epsilon));
+        double Q_measure_brownian = sqrt_dt * spot_draws[i-1] + ( (getDrift() - getRiskFreeRate())/sqrt_v_max ) * dt;
         spot_path[i] = spot_path[i-1] + getRiskFreeRate() * spot_path[i-1] * dt + sqrt_v_max * spot_path[i-1] * Q_measure_brownian;
           /* Log stock price */
           //spot_path[i] = spot_path[i-1] + (getRiskFreeRate() - 0.5) *dt + sqrt(v_max) * Q_measure_brownian;
@@ -122,7 +122,7 @@ static void testHestonVisually(){
 
     //generate_normal_correlation_paths(rho, spot_draws, vol_draws);
     fill_correlated_normals(vol_draws, spot_draws, rho);
-    vol_prices = hest_euler.calc_vol_path(T, num_intervals, vol_draws);
+    vol_prices = hest_euler.getVolPath(T, num_intervals, vol_draws);// hest_euler.calc_vol_path(T, num_intervals, vol_draws);
     spot_prices = hest_euler.generatePricePath(T, num_intervals, vol_prices, spot_draws);
     
     double dt = (T-hest_euler.getDate())/num_intervals;
@@ -315,7 +315,7 @@ static void testGenPricePath(){
 static void testRiskNeutralPricing(){
     /* This tests Risk Neutral pricing of the heston model */
     
-    /* DOESNT WORK YET */
+    /* DOESNT WORK YET, but should work now, still doesnt tho*/
     my_rng();
     // First we create the parameter list
     // Note that you could easily modify this code to input the parameters
