@@ -154,6 +154,19 @@ vector<double> my_randn( int n ) {
     return v;
 }
 
+/* Create Poisson distrubuted random numbers */
+vector<double> randp( int n, double parameter){
+    vector<double> v(n,0);
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    
+    std::poisson_distribution<> d(parameter);
+    for(int i =0; i<n; i++){
+        v[i] = d(gen);
+    }
+    return v;
+}
+
 void fill_correlated_normals(vector<double>& n1, vector<double>& n2, double rho){
     int n = n1.size();
     int m = n2.size();

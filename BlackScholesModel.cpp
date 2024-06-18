@@ -94,7 +94,7 @@ void testRiskNeutralPricePath() {
         vector<double> path = bsm.generateRiskNeutralPricePath( maturity, nsteps );
         finalPrices[i] = path.back();
     }
-    ASSERT_APPROX_EQUAL( mean( finalPrices ), exp( bsm.getRiskFreeRate()*2.0)*bsm.getStockPrice(), 0.5);
+    ASSERT_APPROX_EQUAL( mean( finalPrices ), exp( bsm.getRiskFreeRate()*(maturity-bsm.getDate()))*bsm.getStockPrice(), 0.5);
     //std::cout << mean( finalPrices ) << std::endl;
     //std::cout << exp( bsm.getRiskFreeRate()*2.0)*bsm.getStockPrice() << std::endl;
 }
@@ -131,7 +131,7 @@ void testRiskNeutralPricing(){
 
     double S_0 = 100.0;    // Initial spot price
     double r = 0.03;     // Risk-free rate
-    double v_0 = 0.01; // Initial volatility
+    double v_0 = 0.3; // Initial volatility
     double date_0 = 0.0;    //Initial date
     double T = 1.00;       // One year until expiry
 

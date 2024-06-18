@@ -21,6 +21,8 @@
 #include "HestonModel.h"
 #include "ScottChesney.h"
 
+#include "Poisson.h"
+
 #include <ctime>
 
 //using namespace std;
@@ -51,7 +53,8 @@ int main() {
     //testBlackScholesPDE();
     //testMatlib();
     //testBlackScholesModel();
-    testHestonModel();
-    //testScottChesneyModel();
+    //testHestonModel();
+    testScottChesneyModel();
+    //testPoissonProcess();
     return 0;
 }

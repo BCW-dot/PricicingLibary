@@ -28,6 +28,7 @@ std::vector<double> randn( int n );
 std::vector<double> my_randn( int n );
 std::vector<double> my_randuniform( int n );
 void my_rng();
+std::vector<double> randp( int n, double parameter);
 /* open a plot/hist right away */
 void open_plot(std::string file_name);
 void open_hist(std::string file_name);

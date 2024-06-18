@@ -231,6 +231,7 @@ static void testPDEcallPricesVsBSMprices(){
     plot("testCallprices.html", spots, call_prices_closed_forsolution );
     plot("CallPDEprices.html", spots, option_value);
 }
+
 /*
 static void testPDEparallel(int M){
     std::shared_ptr<CallOption> c = std::make_shared<CallOption>();

@@ -50,8 +50,10 @@ vector<double> ScottChesney::generateRiskNeutralPricePath(double toDate, int nSt
 
     for (int i=1; i<nSteps; i++) {
         double v_e = std::exp(vol_path[i-1]);
-        double Q_measure_brownian = sqrt_dt * spot_draws[i-1] + ( (getDrift() - getRiskFreeRate())/v_e ) * dt;
-        spot_path[i] = spot_path[i-1] + getRiskFreeRate() * spot_path[i-1] * dt + v_e * spot_path[i-1] * Q_measure_brownian;
+        //double Q_measure_brownian = sqrt_dt * spot_draws[i-1] + ( (getDrift() - getRiskFreeRate())/v_e ) * dt;
+        //spot_path[i] = spot_path[i-1] + getRiskFreeRate() * spot_path[i-1] * dt + v_e * spot_path[i-1] * Q_measure_brownian;
+        double Q_measure_brownian = sqrt_dt * spot_draws[i-1] - ( (getDrift() - getRiskFreeRate())/v_e ) * dt;
+        spot_path[i] = spot_path[i-1] + getDrift() * spot_path[i-1] * dt + v_e * spot_path[i-1] * Q_measure_brownian;
     }
     return spot_path;
 }
@@ -69,13 +71,50 @@ vector<double> ScottChesney::calc_vol_path(double toDate, int nSteps, const std:
     return vol_path;
 }
 
+//something wrong here
+/*
+ 1. check girsanov for Scott Chesney
+ 2. check formulas for v and S
+ 3. give up
+ */
+vector<double> ScottChesney::Q_measure_price_path(double toDate, int nSteps) const{
+    vector<double> spot_path(nSteps,0.0);
+    spot_path[0] = getStockPrice();
+    double v = getVolatility();
+    
+    double dt = (toDate-getDate())/nSteps;
+    double sqrt_dt = sqrt(dt);
+    
+    vector<double> b1 = randn( nSteps );
+    vector<double> b2 = randn( nSteps );
+    
+    double sqrt_rho = sqrt(1-rho*rho);
+
+    // Create the spot price path making use of the volatility
+    for (int i=1; i<nSteps; i++) {
+        //vol "path"
+        v = std::max(v + kappa * (theta - v) * dt + xi * sqrt_dt * (rho * b1[i] + sqrt_rho * b2[i]), 0.0);
+        //Q measure
+        double W_Q = sqrt_dt * b1[i] - (getDrift() - getRiskFreeRate())/exp(v) * dt;
+        //price path
+        spot_path[i] = spot_path[i-1] + getDrift() * spot_path[i-1] * dt + exp(v) * spot_path[i-1] * W_Q;
+    }
+    
+    return spot_path;
+}
+
+/*
+ *
+ * TEST
+ *
+ */
+
 static void testScottChesneyVisually(){
     my_rng();
-    // First we create the parameter list
+    
     unsigned num_intervals = 1000;  // Number of intervals for the asset path to be sampled
 
     double S_0 = 100.0;    // Initial spot price
-    //double K = 100.0;      // Strike price
     double r = 0.03;     // Risk-free rate
     double drift = 0.04;
     double v_0 = 0.01; // Initial volatility
@@ -83,7 +122,7 @@ static void testScottChesneyVisually(){
     double date_0 = 0.0;
 
     double rho = 0.9;     // Correlation of asset and volatility
-    double kappa = 6.21;   // Mean-reversion rate
+    double kappa = 2.21;   // Mean-reversion rate
     double theta = 0.02;  // Long run average volatility
     double xi = 0.02;      // "Vol of vol"
 
@@ -106,8 +145,8 @@ static void testScottChesneyVisually(){
 
     fill_correlated_normals(vol_draws, spot_draws, rho);
 
-    vol_prices = hest_euler.calc_vol_path(T, num_intervals, vol_draws);
-    spot_prices = hest_euler.generatePricePath(T, num_intervals, vol_prices, spot_draws);
+    vol_prices = hest_euler.getVolPath(T, num_intervals, vol_draws);
+    spot_prices = hest_euler.getPath(T, num_intervals, vol_prices, spot_draws);
     
     double dt = (T-hest_euler.getDate())/num_intervals;
     vector<double> times = linspace(dt, T, num_intervals );
@@ -123,9 +162,7 @@ static void testScottChesneyVisually(){
 
 static void testScottChesneyPayoff(){
     my_rng();
-    // First we create the parameter list
-    // Note that you could easily modify this code to input the parameters
-    // either from the command line or via a file
+    
     unsigned num_sims = 1000;   // Number of simulated asset paths
     unsigned num_intervals = 1000;  // Number of intervals for the asset path to be sampled
 
@@ -168,16 +205,14 @@ static void testScottChesneyPayoff(){
     //double payoff_sum1 = 0.0;
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
     for (unsigned i=0; i<num_sims; i++) {
-      //std::cout << "Calculating path " << i+1 << " of " << num_sims << std::endl;
       fill_correlated_normals(vol_draws, spot_draws, rho);
-      vol_prices = hest_euler.calc_vol_path(T, num_intervals, vol_draws);
-      spot_prices = hest_euler.generatePricePath(T, num_intervals, vol_prices, spot_draws);
+      vol_prices = hest_euler.getVolPath(T, num_intervals, vol_draws);
+      spot_prices = hest_euler.getPath(T, num_intervals, vol_prices, spot_draws);
       payoff_sum += c.payoff(spot_prices);
-        //payoff_sum1 += c.payoff(hest_euler.generatePricePath1(T, num_intervals, vol_prices, spot_draws));
     }
     std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
     std::cout << " Option was priced in "<< pow(10,-6)*std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << "[s]" << std::endl;
-    double option_price = (payoff_sum / static_cast<double>(num_sims)) * exp(-r*T);
+    double option_price = (payoff_sum/num_sims) * exp(-r*T);
     std::cout << " Option Price: " << option_price << std::endl;
 }
 
@@ -227,10 +262,8 @@ static void testCallPrice(){
     // Monte Carlo options pricing
     double payoff_sum = 0.0;
     for (unsigned i=0; i<num_sims; i++) {
-      //std::cout << "Calculating path " << i+1 << " of " << num_sims << std::endl;
       fill_correlated_normals(vol_draws, spot_draws, rho);
-      //vol_prices = hest_euler.calc_vol_path(T, num_intervals, vol_draws);
-      spot_prices = hest_euler.generatePricePath(T, num_intervals, vol_prices, spot_draws);
+      spot_prices = hest_euler.getPath(T, num_intervals, vol_prices, spot_draws);
       payoff_sum += c.payoff(spot_prices);
     }
     double option_price = (payoff_sum / static_cast<double>(num_sims)) * exp(-r*T);
@@ -249,9 +282,6 @@ static void testRiskNeutralPricing(){
     
     /* DOESNT WORK YET */
     my_rng();
-    // First we create the parameter list
-    // Note that you could easily modify this code to input the parameters
-    // either from the command line or via a file
     unsigned num_sims = 1000;   // Number of simulated asset paths
     unsigned num_intervals = 1000;  // Number of intervals for the asset path to be sampled
 
@@ -283,8 +313,91 @@ static void testRiskNeutralPricing(){
       spot_prices = hest_euler.generateRiskNeutralPricePath(T, num_intervals);
       hist_of_last_prices[i] = exp(-hest_euler.getRiskFreeRate()*T)*spot_prices.back();
     }
+    std::cout << mean(hist_of_last_prices) << std::endl;
+    std::cout << exp(hest_euler.getRiskFreeRate()*T)*hest_euler.getStockPrice() << std::endl;
     hist("ScottRiskNeutralPrices.html",hist_of_last_prices,100);
-    open_hist("ScottRiskNeutralPrices.html");
+    //open_hist("ScottRiskNeutralPrices.html");
+}
+
+static void testScottIndependentPath(){
+    my_rng();
+    // First we create the parameter list
+    // Note that you could easily modify this code to input the parameters
+    // either from the command line or via a file
+    unsigned num_intervals = 1000;   // Number of simulated asset paths
+
+    double S_0 = 100.0;    // Initial spot price
+    double r = 0.03;     // Risk-free rate
+    double v_0 = 0.01; // Initial volatility
+    double T = 1.00;       // One year until expiry
+
+    double rho = 0.8;     // Correlation of asset and volatility
+    double kappa = 6.21;   // Mean-reversion rate
+    double theta = 0.019;  // Long run average volatility
+    double xi = 0.61;      // "Vol of vol"
+
+    ScottChesney hest_euler;
+    hest_euler.setRiskFreeRate(r);
+    hest_euler.setVolatility(v_0);
+    hest_euler.setStockPrice(S_0);
+    hest_euler.setDate(0.0);
+    hest_euler.rho = rho;
+    hest_euler.kappa = kappa;
+    hest_euler.theta = theta;
+    hest_euler.xi = xi;
+    
+    vector<double> spot_prices(num_intervals,0.0);
+    vector<double> spot_prices_underQ(num_intervals,0.0);
+
+    //my_rng();
+    spot_prices_underQ = hest_euler.Q_measure_price_path(T, num_intervals);
+    
+    double dt = (T-hest_euler.getDate())/num_intervals;
+    vector<double> times = linspace(dt, T, num_intervals );
+    plot("QMeasureScottPricePath.html",times, spot_prices_underQ );
+    //open_plot("QMeasureScottPricePath.html");
+}
+
+static void testQmeasurePricing(){
+    /* This tests Risk Neutral pricing of the heston model */
+    
+    /* DOESNT WORK YET */
+    my_rng();
+    unsigned num_sims = 1000;   // Number of simulated asset paths
+    unsigned num_intervals = 1000;  // Number of intervals for the asset path to be sampled
+
+    double S_0 = 120.0;    // Initial spot price
+    double r = 0.03;     // Risk-free rate
+    double v_0 = 0.01; // Initial volatility
+    double date_0 = 0.0;    //Initial date
+    double T = 1.00;       // One year until expiry
+
+    double rho = 0.8;     // Correlation of asset and volatility
+    double kappa = 3.0;   // Mean-reversion rate
+    double theta = 0.02;  // Long run average volatility
+    double xi = 0.01;      // "Vol of vol"
+
+    ScottChesney hest_euler;
+    hest_euler.setRiskFreeRate(r);
+    hest_euler.setVolatility(v_0);
+    hest_euler.setStockPrice(S_0);
+    hest_euler.setDate(date_0);
+    hest_euler.rho = rho;
+    hest_euler.kappa = kappa;
+    hest_euler.theta = theta;
+    hest_euler.xi = xi;
+
+    std::vector<double> spot_prices;//(num_intervals, S_0);  // Vector of initial spot prices
+    std::vector<double> hist_of_last_prices(num_intervals, 0.0);
+    
+    for (int i=0; i<num_sims; i++) {
+      spot_prices = hest_euler.Q_measure_price_path(T, num_intervals);
+      hist_of_last_prices[i] = spot_prices.back(); //exp(-hest_euler.getRiskFreeRate()*T)*
+    }
+    std::cout << mean(hist_of_last_prices) << std::endl;
+    std::cout << exp(hest_euler.getRiskFreeRate()*T)*hest_euler.getStockPrice() << std::endl;
+    hist("ScottRiskNeutralindependentPrices.html",hist_of_last_prices,100);
+    //open_hist("ScottRiskNeutralindependentPrices.html");
 }
 
 void testScottChesneyModel(){
@@ -292,4 +405,6 @@ void testScottChesneyModel(){
     TEST( testScottChesneyVisually );
     TEST( testCallPrice );
     TEST( testRiskNeutralPricing );
+    TEST( testQmeasurePricing );
+    TEST( testScottIndependentPath );
 }

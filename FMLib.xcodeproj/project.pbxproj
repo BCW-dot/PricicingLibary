@@ -37,6 +37,7 @@
 		B995BA6E2BC842530058B874 /* ScottChesney.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B995BA6D2BC842530058B874 /* ScottChesney.cpp */; };
 		B9D86D3B2BB475C200FFF7EB /* StockPriceModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9D86D3A2BB475C200FFF7EB /* StockPriceModel.cpp */; };
 		B9D86D3E2BB4818200FFF7EB /* TwoLevelModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9D86D3D2BB4818200FFF7EB /* TwoLevelModel.cpp */; };
+		B9E98ADC2C2058A2004C3ABC /* Poisson.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9E98ADB2C2058A2004C3ABC /* Poisson.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -116,6 +117,8 @@
 		B9D86D3C2BB475DB00FFF7EB /* StockPriceModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StockPriceModel.h; sourceTree = "<group>"; };
 		B9D86D3D2BB4818200FFF7EB /* TwoLevelModel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TwoLevelModel.cpp; sourceTree = "<group>"; };
 		B9D86D3F2BB4818F00FFF7EB /* TwoLevelModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TwoLevelModel.h; sourceTree = "<group>"; };
+		B9E98ADB2C2058A2004C3ABC /* Poisson.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Poisson.cpp; sourceTree = "<group>"; };
+		B9E98ADD2C2058B6004C3ABC /* Poisson.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Poisson.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,6 +157,8 @@
 				AC180DD41D3E8678009AE6D4 /* AsianOption.h */,
 				B9D86D3A2BB475C200FFF7EB /* StockPriceModel.cpp */,
 				B9D86D3C2BB475DB00FFF7EB /* StockPriceModel.h */,
+				B9E98ADB2C2058A2004C3ABC /* Poisson.cpp */,
+				B9E98ADD2C2058B6004C3ABC /* Poisson.h */,
 				AC180DD71D3E8678009AE6D4 /* BlackScholesModel.cpp */,
 				AC180DD81D3E8678009AE6D4 /* BlackScholesModel.h */,
 				B91991282BC5656900E8BFA6 /* HestonModel.cpp */,
@@ -285,6 +290,7 @@
 				AC180E1C1D3E8678009AE6D4 /* UpAndInOption.cpp in Sources */,
 				AC180E071D3E8678009AE6D4 /* BarrierOption.cpp in Sources */,
 				B9D86D3E2BB4818200FFF7EB /* TwoLevelModel.cpp in Sources */,
+				B9E98ADC2C2058A2004C3ABC /* Poisson.cpp in Sources */,
 				AC180E131D3E8678009AE6D4 /* MonteCarloPricer.cpp in Sources */,
 				AC180E1D1D3E8678009AE6D4 /* UpAndOutOption.cpp in Sources */,
 				B91991292BC5656900E8BFA6 /* HestonModel.cpp in Sources */,

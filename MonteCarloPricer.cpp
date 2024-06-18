@@ -107,6 +107,7 @@ static void testHestonCallOption(){
     double v_0 = 0.01; // Initial volatility
     double T = 1.00;       // One year until expiry
     double K = 100;
+    double date_0 = 0.0;
 
     double rho = 0.8;     // Correlation of asset and volatility
     double kappa = 6.21;   // Mean-reversion rate
@@ -117,7 +118,7 @@ static void testHestonCallOption(){
     hest_euler.setRiskFreeRate(r);
     hest_euler.setVolatility(v_0);
     hest_euler.setStockPrice(S_0);
-    hest_euler.setDate(0.0);
+    hest_euler.setDate(date_0);
     hest_euler.rho = rho;
     hest_euler.kappa = kappa;
     hest_euler.theta = theta;
@@ -128,9 +129,16 @@ static void testHestonCallOption(){
     c.setStrike(K);
     c.setMaturity(T);
     
+    BlackScholesModel bsm;
+    bsm.setRiskFreeRate(r);
+    bsm.setVolatility(v_0);
+    bsm.setStockPrice(S_0);
+    bsm.setDate(date_0);
+    
     MonteCarloPricer pricer;
     pricer.nSteps = 1000;
     std::cout << "Monte Carlo pricer Heston: " << pricer.price(c, hest_euler) << std::endl;
+    std::cout << "Closed form: " << c.price(bsm) << std::endl;
     
     //ASSERT_APPROX_EQUAL(pricer.price(c, hest_euler), c.price(bsm), 0.1);
 }
