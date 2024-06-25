@@ -409,6 +409,49 @@ double norminv( double x ) {
 	}
 }
 
+void display_matrix(const vector<vector<double>>& matrix) {
+    for (const auto& row : matrix) {
+        for (double val : row) {
+            cout << val << "\t";
+        }
+        cout << endl;
+    }
+    cout<< " " << endl;
+}
+
+// Function to mimic numpy's linspace
+std::vector<double> linspace2(double start, double end, int num) {
+    std::vector<double> linspaced;
+
+    if (num == 0) {
+        return linspaced;
+    }
+    if (num == 1) {
+        linspaced.push_back(start);
+        return linspaced;
+    }
+
+    double delta = (end - start) / (num - 1);
+
+    for (int i = 0; i < num; ++i) {
+        //cout << start + i * delta << ", ";
+        linspaced.push_back(start + i * delta);
+    }
+
+    // Ensure the last value is exactly 'end' to handle floating-point arithmetic issues
+    //linspaced.back() = end;
+
+    return linspaced;
+}
+
+double normal_cdf(double x, double mu, double sigma) {
+    return 0.5 * erfc(-(x - mu) / (sigma * sqrt(2)));
+}
+
+double payoff(double S, double K) {
+    return max(S - K, 0.0);
+}
+
 /**
  *   Evaluate an integral using the rectangle rule
  */
@@ -428,10 +471,11 @@ double integral( RealFunction& f,
 }
 
 void print(std::vector<double> v){
-    for(int i = 0; i < v.size() - 1; i++){
+    for(int i = 0; i < v.size(); i++){
         std::cout<< v[i] << ", ";
     }
-    std::cout << v[v.size()] << std::endl;
+    std::cout << " " << std::endl;
+    //std::cout << v[v.size()] << std::endl;
 }
 
 double sum_parallel(std::vector<double>& v){

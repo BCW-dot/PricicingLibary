@@ -34,7 +34,10 @@
 		B9018D9D2BBC35E900770579 /* pde.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9018D972BBC35E900770579 /* pde.cpp */; };
 		B91991292BC5656900E8BFA6 /* HestonModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B91991282BC5656900E8BFA6 /* HestonModel.cpp */; };
 		B93CAB5C2BBD45780044A1FE /* fdm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B93CAB5B2BBD45780044A1FE /* fdm.cpp */; };
+		B97967592C26FAD6003FCB94 /* MertonPDE.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B97967582C26FAD6003FCB94 /* MertonPDE.cpp */; };
 		B995BA6E2BC842530058B874 /* ScottChesney.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B995BA6D2BC842530058B874 /* ScottChesney.cpp */; };
+		B9CBD6072C28A256006B7393 /* FDM_Merton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9CBD6052C28A256006B7393 /* FDM_Merton.cpp */; };
+		B9CBD60B2C295D29006B7393 /* Test_MertonEuler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9CBD60A2C295D29006B7393 /* Test_MertonEuler.cpp */; };
 		B9D86D3B2BB475C200FFF7EB /* StockPriceModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9D86D3A2BB475C200FFF7EB /* StockPriceModel.cpp */; };
 		B9D86D3E2BB4818200FFF7EB /* TwoLevelModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9D86D3D2BB4818200FFF7EB /* TwoLevelModel.cpp */; };
 		B9E98ADC2C2058A2004C3ABC /* Poisson.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9E98ADB2C2058A2004C3ABC /* Poisson.cpp */; };
@@ -111,8 +114,16 @@
 		B91991282BC5656900E8BFA6 /* HestonModel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = HestonModel.cpp; sourceTree = "<group>"; };
 		B919912A2BC5657700E8BFA6 /* HestonModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HestonModel.h; sourceTree = "<group>"; };
 		B93CAB5B2BBD45780044A1FE /* fdm.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = fdm.cpp; sourceTree = "<group>"; };
+		B97967582C26FAD6003FCB94 /* MertonPDE.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MertonPDE.cpp; sourceTree = "<group>"; };
+		B979675A2C26FAE4003FCB94 /* MertonPDE.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MertonPDE.h; sourceTree = "<group>"; };
 		B995BA6D2BC842530058B874 /* ScottChesney.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ScottChesney.cpp; sourceTree = "<group>"; };
 		B995BA6F2BC842680058B874 /* ScottChesney.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScottChesney.h; sourceTree = "<group>"; };
+		B9CBD6032C2883EF006B7393 /* DiffsuionPDE.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiffsuionPDE.h; sourceTree = "<group>"; };
+		B9CBD6042C28A208006B7393 /* FdmBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FdmBase.h; sourceTree = "<group>"; };
+		B9CBD6052C28A256006B7393 /* FDM_Merton.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FDM_Merton.cpp; sourceTree = "<group>"; };
+		B9CBD6092C28A348006B7393 /* FDM_Merton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FDM_Merton.h; sourceTree = "<group>"; };
+		B9CBD60A2C295D29006B7393 /* Test_MertonEuler.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Test_MertonEuler.cpp; sourceTree = "<group>"; };
+		B9CBD60C2C295D38006B7393 /* Test_MertonEuler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Test_MertonEuler.h; sourceTree = "<group>"; };
 		B9D86D3A2BB475C200FFF7EB /* StockPriceModel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StockPriceModel.cpp; sourceTree = "<group>"; };
 		B9D86D3C2BB475DB00FFF7EB /* StockPriceModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StockPriceModel.h; sourceTree = "<group>"; };
 		B9D86D3D2BB4818200FFF7EB /* TwoLevelModel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TwoLevelModel.cpp; sourceTree = "<group>"; };
@@ -169,10 +180,18 @@
 				B9D86D3F2BB4818F00FFF7EB /* TwoLevelModel.h */,
 				AC180DED1D3E8678009AE6D4 /* MonteCarloPricer.cpp */,
 				AC180DEE1D3E8678009AE6D4 /* MonteCarloPricer.h */,
+				B9CBD6042C28A208006B7393 /* FdmBase.h */,
 				B93CAB5B2BBD45780044A1FE /* fdm.cpp */,
 				B9018D992BBC35E900770579 /* fdm.h */,
+				B9CBD6032C2883EF006B7393 /* DiffsuionPDE.h */,
 				B9018D972BBC35E900770579 /* pde.cpp */,
 				B9018D952BBC35E900770579 /* pde.h */,
+				B9CBD60A2C295D29006B7393 /* Test_MertonEuler.cpp */,
+				B9CBD60C2C295D38006B7393 /* Test_MertonEuler.h */,
+				B97967582C26FAD6003FCB94 /* MertonPDE.cpp */,
+				B979675A2C26FAE4003FCB94 /* MertonPDE.h */,
+				B9CBD6052C28A256006B7393 /* FDM_Merton.cpp */,
+				B9CBD6092C28A348006B7393 /* FDM_Merton.h */,
 				AC180DFC1D3E8678009AE6D4 /* Stock.h */,
 				AC180E051D3E8678009AE6D4 /* ZeroCouponBond.h */,
 				AC180DF51D3E8678009AE6D4 /* Priceable.cpp */,
@@ -289,10 +308,12 @@
 				AC180E091D3E8678009AE6D4 /* CallOption.cpp in Sources */,
 				AC180E1C1D3E8678009AE6D4 /* UpAndInOption.cpp in Sources */,
 				AC180E071D3E8678009AE6D4 /* BarrierOption.cpp in Sources */,
+				B97967592C26FAD6003FCB94 /* MertonPDE.cpp in Sources */,
 				B9D86D3E2BB4818200FFF7EB /* TwoLevelModel.cpp in Sources */,
 				B9E98ADC2C2058A2004C3ABC /* Poisson.cpp in Sources */,
 				AC180E131D3E8678009AE6D4 /* MonteCarloPricer.cpp in Sources */,
 				AC180E1D1D3E8678009AE6D4 /* UpAndOutOption.cpp in Sources */,
+				B9CBD6072C28A256006B7393 /* FDM_Merton.cpp in Sources */,
 				B91991292BC5656900E8BFA6 /* HestonModel.cpp in Sources */,
 				AC180E061D3E8678009AE6D4 /* AsianOption.cpp in Sources */,
 				AC180E1B1D3E8678009AE6D4 /* textfunctions.cpp in Sources */,
@@ -305,6 +326,7 @@
 				B9018D9D2BBC35E900770579 /* pde.cpp in Sources */,
 				AC180E1A1D3E8678009AE6D4 /* testing.cpp in Sources */,
 				B9D86D3B2BB475C200FFF7EB /* StockPriceModel.cpp in Sources */,
+				B9CBD60B2C295D29006B7393 /* Test_MertonEuler.cpp in Sources */,
 				AC180E161D3E8678009AE6D4 /* Portfolio.cpp in Sources */,
 				AC180E0B1D3E8678009AE6D4 /* ContinuousTimeOptionBase.cpp in Sources */,
 				AC180E121D3E8678009AE6D4 /* matlib.cpp in Sources */,

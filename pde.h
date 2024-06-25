@@ -3,6 +3,9 @@
 #include "PathIndependentOption.h"
 #include "BlackScholesModel.h"
 
+#include "DiffsuionPDE.h"
+
+/*
 //small git hub change test
 // Convection Diffusion Equation - Second-order PDE
 class ConvectionDiffusionPDE {
@@ -18,6 +21,7 @@ class ConvectionDiffusionPDE {
   virtual double boundary_right(double t, double x) const = 0;
   virtual double init_cond(double x) const = 0;
 };
+ */
 
 // Black-Scholes PDE
 class BlackScholesPDE : public ConvectionDiffusionPDE {

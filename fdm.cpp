@@ -88,7 +88,7 @@ void FDMEulerExplicit::step_march() {
   fdm_out.close();
 }
 
-//DOESNT work wrll cince the threads are all accecsing the same functions, which are not parallel somehwoe
+//DOESNT work wrll since the threads are all accecsing the same functions, which are not parallel somehwoe
 void FDMEulerExplicit::calculate_inner_domain_parallel() {
     #pragma omp parallel for
     for (unsigned long j = 1; j < J - 1; j++) {

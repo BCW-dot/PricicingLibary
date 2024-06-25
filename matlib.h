@@ -72,8 +72,14 @@ void writeVectorsToCsv(const std::vector<double>& v1, const std::vector<double>&
 void fill_correlated_normals(std::vector<double>& n1, std::vector<double>& n2, double rho);
 
 
+void display_matrix(const std::vector<std::vector<double>>& matrix);
 
+// Function to mimic numpy's linspace
+std::vector<double> linspace2(double start, double end, int num);
 
+double normal_cdf(double x, double mu = 0, double sigma = 1);
+
+double payoff(double S, double K);
 
 /**
  *  Test function
