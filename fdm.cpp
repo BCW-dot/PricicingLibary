@@ -139,19 +139,24 @@ void FDMEulerExplicit::copy_result(std::vector<double>& v){
 }
 
 static void testPDEvisually(){
+    double K = 0.5;  // Strike price
+    double r = 0.05;   // Risk-free rate (5%)
+    double v = 0.2;    // Volatility of the underlying (20%)
+    double T = 1.00;    // One year until expiry
+    
     std::shared_ptr<CallOption> c = std::make_shared<CallOption>();
-    c->setStrike(50.5);
-    c->setMaturity(1.0);
+    c->setStrike(K);
+    c->setMaturity(T);
     
     std::shared_ptr<BlackScholesModel> bsm = std::make_shared<BlackScholesModel>();
-    bsm->setRiskFreeRate(0.05);
-    bsm->setVolatility(0.2);
+    bsm->setRiskFreeRate(r);
+    bsm->setVolatility(v);
 
       // FDM discretisation parameters
-      double x_dom = 100.0;       // Spot goes from [0.0, x_dom]
-      unsigned long J = 40;       //1/J space discretization
-      double t_dom = c->getMaturity();         // Time period as for the option
-      unsigned long N = 100;       //1/N time discretization
+      double x_dom = 1.0;       // Spot goes from [0.0, 1.0]
+      unsigned long J = 20;
+      double t_dom = T;         // Time period as for the option
+      unsigned long N = 20;
         
       // Create the PDE and FDM objects
       std::shared_ptr<BlackScholesPDE> bs_pde = std::make_shared<BlackScholesPDE>(c, bsm);
@@ -167,6 +172,7 @@ static void testPDEvisually(){
     
     std::vector<double> option_value(J,0.0);
     fdm_euler.copy_result(option_value);
+    print(option_value);
     double dx = x_dom/J;
     //std::cout << "Option price at t_0 for different S_0: ";
     //print(option_value);

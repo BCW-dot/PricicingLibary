@@ -22,8 +22,6 @@
 #include "ScottChesney.h"
 
 #include "Poisson.h"
-#include "MertonPDE.h"
-#include "Test_MertonEuler.h"
 
 #include <ctime>
 
@@ -57,8 +55,6 @@ int main() {
     //testBlackScholesModel();
     //testHestonModel();
     //testScottChesneyModel();
-    //testPoissonProcess();
-    //testMertonPDE();
-    testMertonEuler();
+    testPoissonProcess();
     return 0;
 }
