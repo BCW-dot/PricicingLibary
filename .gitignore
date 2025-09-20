@@ -1,0 +1,71 @@
+# Build directories
+build/
+bin/
+lib/
+out/
+cmake-build-*/
+
+# CMake generated files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+*.cmake
+!CMakeLists.txt
+CTestTestfile.cmake
+Testing/
+
+# Compiled binaries and objects
+*.exe
+*.out
+*.app
+*.dll
+*.so
+*.dylib
+*.a
+*.lib
+*.o
+*.obj
+*.pdb
+*.ilk
+*.exp
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.user
+*.vcxproj.user
+*.suo
+*.sdf
+*.opensdf
+
+# MacOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# Temporary files
+*.tmp
+*.log
+*.bak
+*.backup
+*.cache
+
+# Package managers
+vcpkg_installed/
+conan_imports_manifest.txt
+conanbuildinfo.*
+
+# Documentation build
+docs/_build/
